@@ -1,7 +1,8 @@
 import React from 'react';
+import Title from '@/components/Title';
 
 const ApplyPage = () => {
-  return <div>ApplyPage</div>;
+  return <Title />;
 };
 
 export default ApplyPage;
