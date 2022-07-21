@@ -8,7 +8,9 @@ const GlobalStyles = createGlobalStyle`
    outline:none;
    border:none;
  }
-
+ #root, html, body {
+   height: 100%;
+ }
  ul{
   list-style: none;
  }
