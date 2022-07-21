@@ -1,3 +1,4 @@
+import { ApiUrlEnum } from '@/@types';
 import { AxiosResponse } from 'axios';
 import { useState } from 'react';
 import { RegionDataInterface } from 'request';
@@ -9,7 +10,7 @@ const useRegionModel = () => {
   const getRegionData = async () => {
     try {
       const regionResponse: AxiosResponse<RegionDataInterface> =
-        await apiRequest.get<RegionDataInterface>('/region');
+        await apiRequest.get<RegionDataInterface>(ApiUrlEnum.REGION);
 
       if (regionResponse) {
         setRegion(regionResponse.data);
