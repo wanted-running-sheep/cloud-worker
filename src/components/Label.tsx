@@ -2,13 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 
 interface LabelProps {
-  children: string;
+  title?: string;
   description?: string;
 }
-const Label = ({ children, description }: LabelProps) => {
+const Label = ({ title, description }: LabelProps) => {
   return (
     <Wrapper>
-      <h3>{children}</h3>
+      <h3>{title}</h3>
       {description && <p>{description}</p>}
     </Wrapper>
   );
