@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { RoundButtonEnum } from '@/@types/enum';
 import RoundButton from '@/components/RoundButton';
 
 const TransportationList = () => {
@@ -18,11 +17,7 @@ const TransportationList = () => {
   return (
     <Wrapper>
       {transportations.map((transportation, index) => (
-        <RoundButton
-          key={index}
-          showText={transportation}
-          type={RoundButtonEnum.TRANSPORTATION}
-        />
+        <RoundButton key={index} showText={transportation} />
       ))}
     </Wrapper>
   );
