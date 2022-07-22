@@ -8,30 +8,35 @@ interface TitleProps {
 }
 
 const Title = ({ title, icon }: TitleProps) => {
-  icon === 'close' ? 'Close' : 'LeftDirection';
   return (
-    <TitleWrapper>
+    <Wrapper iconType={icon}>
       <div>{icon === 'close' ? <Close /> : <LeftDirection />}</div>
       <h2>{title}</h2>
-    </TitleWrapper>
+    </Wrapper>
   );
 };
 
 export default Title;
 
-const TitleWrapper = styled.div`
+const Wrapper = styled.div<{ iconType: string }>`
   width: 100%;
-  padding: 0.8rem 0.5rem;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid ${({ theme }) => theme.color.border.lightgray};
   position: relative;
-  ${({ theme }) => theme.mixins.flexBox('center', 'center')};
+  ${({ theme, iconType }) =>
+    iconType === 'close'
+      ? theme.mixins.flexBox('center', 'center')
+      : theme.mixins.flexBox('center', 'flex-start')};
   div {
     position: absolute;
-    left: 0;
+    left: 10px;
     top: 50%;
     transform: translateY(-50%);
   }
   h2 {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     line-height: 2rem;
+    margin: 0 50px;
   }
 `;
