@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import { formatString } from '@/utils/formatString';
+import { InputNameType, InputNameEnum } from '@/@types/enum';
 
 import styled from 'styled-components';
 
@@ -53,7 +54,7 @@ const Input = ({
 
   const makeAutoFormat = (
     event: React.ChangeEvent<HTMLInputElement>,
-    type: string
+    type: InputNameType
   ) => {
     let inputValue = event.currentTarget.value;
     event.currentTarget.value = formatString(inputValue, type);
@@ -62,8 +63,11 @@ const Input = ({
   const handleChangeValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (reg === undefined) return;
     handleValidationCheck(event);
-    const type = otherProps.name as string;
-    makeAutoFormat(event, type);
+
+    const type = otherProps.name;
+    if (type === InputNameEnum.BIRTH || type === InputNameEnum.PHONE) {
+      makeAutoFormat(event, type);
+    }
   };
 
   return (
@@ -89,6 +93,8 @@ const StyledInput = styled.input<{
       validationBorder ? theme.color.border.lightgray : theme.color.border.red};
   height: ${({ height }) => `${height}`};
   width: ${({ width }) => `${width}`};
+  margin-bottom: 30px;
+  border-radius: 4px;
   ::placeholder {
     color: ${({ theme }) => theme.color.font.gray};
   }
