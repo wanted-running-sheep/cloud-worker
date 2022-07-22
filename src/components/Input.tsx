@@ -52,10 +52,9 @@ const Input = ({
   };
 
   const makeAutoFormat = (
-    event: React.KeyboardEvent<HTMLInputElement>,
+    event: React.ChangeEvent<HTMLInputElement>,
     type: string
   ) => {
-    if (event.code === 'Backspace') return;
     let inputValue = event.currentTarget.value;
     event.currentTarget.value = formatString(inputValue, type);
   };
@@ -63,11 +62,7 @@ const Input = ({
   const handleChangeValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (reg === undefined) return;
     handleValidationCheck(event);
-  };
-
-  const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    const type = otherProps.name;
-    if (type !== 'birth' && type !== 'phone') return;
+    const type = otherProps.name as string;
     makeAutoFormat(event, type);
   };
 
@@ -78,7 +73,6 @@ const Input = ({
         height={height}
         width={width}
         onChange={handleChangeValue}
-        onKeyUp={handleKeyUp}
         validationBorder={isValid}
       />
     </div>
