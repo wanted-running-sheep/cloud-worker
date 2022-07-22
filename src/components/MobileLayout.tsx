@@ -27,9 +27,9 @@ const Section = styled.section`
   padding: 15px 10px;
 
   h1 {
-    width: 290px;
-    font-size: 1.4em;
+    width: 270px;
+    font-size: 1.3rem;
     font-weight: 900;
-    margin-bottom: 25px;
+    margin-bottom: 35px;
   }
 `;
