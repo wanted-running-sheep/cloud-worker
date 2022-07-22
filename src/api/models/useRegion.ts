@@ -1,4 +1,4 @@
-import { ApiUrlEnum } from '@/@types';
+import { ApiUrlEnum } from '@/@types/enum';
 import { AxiosResponse } from 'axios';
 import { useState } from 'react';
 import { RegionDataInterface } from 'request';

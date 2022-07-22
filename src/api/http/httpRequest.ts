@@ -1,4 +1,4 @@
-import { ApiUrlType } from '@/@types';
+import { ApiUrlType } from '@/@types/enum';
 import { AxiosInstance } from 'axios';
 
 export class HttpRequest {
