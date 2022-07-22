@@ -1,3 +1,4 @@
+import { ApiUrlType } from '@/@types/enum';
 import { AxiosInstance } from 'axios';
 
 export class HttpRequest {
@@ -7,11 +8,11 @@ export class HttpRequest {
     this.service = service;
   }
 
-  get<T extends unknown>(url: string) {
-    return this.service.get<T>(`${url}`).then((res) => res);
+  get<T>(url: ApiUrlType) {
+    return this.service.get<T>(url).then((res) => res);
   }
 
-  post<T>(url: string, data: T) {
-    return this.service.post(`${url}`, data).catch(console.log);
+  post<T>(url: ApiUrlType, data: T) {
+    return this.service.post(url, data);
   }
 }

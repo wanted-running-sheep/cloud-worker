@@ -9,6 +9,7 @@ const ApplyPage = () => {
   }, []);
 
   console.log(region);
+
   return <div>ApplyPage</div>;
 };
 
