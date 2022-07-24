@@ -9,7 +9,7 @@ const MobileLayout = () => {
       <Section>
         <h1>크라우드 워커에 지원하기 위해 필요한 정보를 입력해 주세요</h1>
         <Outlet />
-        {/* <RegionModal /> */}
+        <RegionModal />
       </Section>
     </Wrapper>
   );

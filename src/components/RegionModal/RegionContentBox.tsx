@@ -1,18 +1,9 @@
-import useRegionModel from '@/api/models/useRegion';
+import React from 'react';
 import { Close } from '@/assets/icons';
-import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import CityScroll from './CityScroll';
-import DistrictScroll from './DistrictScroll';
+import TouchScroll from './TouchScroll';
 
 const RegionContentBox = () => {
-  const { region, getRegionData } = useRegionModel();
-
-  useEffect(() => {
-    getRegionData();
-  }, []);
-
-  if (!Object.keys(region).length) return null;
   return (
     <Wrapper>
       <TitleContainer>
@@ -31,10 +22,7 @@ const RegionContentBox = () => {
         </DistrictTitleContainer>
       </RegionTitleContainer>
 
-      <RegionScrollContainer>
-        <CityScroll cities={Object.keys(region)} />
-        {/* <DistrictScroll districts={Object.entries(region)} /> */}
-      </RegionScrollContainer>
+      <TouchScroll />
 
       <ButtonWrapper>
         <RoundedButton>확인</RoundedButton>
@@ -101,22 +89,15 @@ const DistrictTitleContainer = styled.div`
   justify-content: center;
 `;
 
-const RegionScrollContainer = styled.div`
-  display: flex;
-  width: 100%;
-  height: 50%;
-  padding: 10px;
-  gap: 10px;
-`;
-
 const ButtonWrapper = styled.div`
-  padding: 30px 10px 0px 10px;
+  padding: 10px;
   flex-grow: 1;
 `;
 
 const RoundedButton = styled.button`
   width: 100%;
-  padding: 15px 0px;
+  height: 100%;
+  /* padding: 10px; */
   border-radius: 10px;
   background-color: ${({ theme }) => theme.color.button.darkbrown};
   color: ${({ theme }) => theme.color.font.white};

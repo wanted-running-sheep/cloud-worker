@@ -1,53 +1,59 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
+import {
+  defaultScrollItemTitle,
+  defaultScrollItemWrapper,
+  defaultScrollWrapper,
+} from '@/styles/styleConstants';
 import styled from 'styled-components';
+import { SetStateType } from '@/@types/react';
 
 interface CityScrollProps {
   cities: string[];
+  setCity: (city: string) => void;
+  region: { city: string; district: string };
+  setRegion: SetStateType<{ city: string; district: string }>;
 }
 
-const CityScroll = ({ cities }: CityScrollProps) => {
-  const scrollRef = useRef<HTMLUListElement>(null);
-  const handleScroll = () => {
-    console.log('scroll');
+const CityScroll = ({
+  cities,
+  setCity,
+  region,
+  setRegion,
+}: CityScrollProps) => {
+  const onClick = (city: string) => {
+    if (region.city === city) return;
+
+    setCity(city);
+    setRegion({ city, district: '' });
   };
 
-  useEffect(() => {
-    scrollRef.current?.addEventListener('scroll', handleScroll);
-    return () => {
-      scrollRef.current?.addEventListener('scroll', handleScroll);
-    };
-  }, [scrollRef.current]);
-
   return (
-    <CityScrollContainer ref={scrollRef}>
+    <CityScrollWrapper>
       {cities.map((city) => (
-        <CityScrollItem key={city}>
+        <CityScrollItem
+          key={city}
+          onClick={() => onClick(city)}
+          isActive={city === region.city}
+        >
           <CityTitle>{city}</CityTitle>
         </CityScrollItem>
       ))}
-    </CityScrollContainer>
+    </CityScrollWrapper>
   );
 };
 
 export default CityScroll;
 
-const CityScrollContainer = styled.ul`
-  height: 100%;
-  flex-grow: 1;
-  overflow-y: scroll;
-  ${({ theme }) => theme.mixins.noScrollBar}
+const CityScrollWrapper = styled.ul`
+  ${defaultScrollWrapper}
 `;
 
-const CityScrollItem = styled.li`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  height: calc(100% / 3);
+const CityScrollItem = styled.li<{ isActive: boolean }>`
+  ${defaultScrollItemWrapper}
+  background-color: ${({ isActive, theme }) =>
+    isActive && theme.color.background.lightgray}
 `;
 
 const CityTitle = styled.span`
-  font-size: 0.9rem;
-  font-weight: bold;
+  ${defaultScrollItemTitle}
 `;
