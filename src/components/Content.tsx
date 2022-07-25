@@ -73,8 +73,9 @@ const Wrapper = styled.div`
     font-size: 0.9rem;
     line-height: 1.2rem;
     margin-bottom: 20px;
+    color: ${({ theme }) => theme.color.font.darkgray};
     &:nth-child(2) {
-      color: ${({ theme }) => theme.color.font.darkgray};
+      color: ${({ theme }) => theme.color.font.gray};
     }
   }
 `;
