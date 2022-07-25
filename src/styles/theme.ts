@@ -20,6 +20,7 @@ const color = {
   },
   border: {
     lightgray: '#E1E1E1',
+    red: '#F55859',
   },
   button: {
     lightgray: '#F5F5F5',
