@@ -9,11 +9,12 @@ const useApplyUserModel = () => {
 
   const getUserData = async () => {
     try {
-      const regionResponse: AxiosResponse<UserInterface[]> =
-        await apiRequest.get<UserInterface[]>(ApiUrlEnum.APPLYUSER);
+      const userResponse: AxiosResponse<UserInterface[]> = await apiRequest.get<
+        UserInterface[]
+      >(ApiUrlEnum.APPLYUSER);
 
-      if (regionResponse) {
-        setUsers(regionResponse.data);
+      if (userResponse) {
+        setUsers(userResponse.data);
       }
     } catch (error) {
       console.log(error);
