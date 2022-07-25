@@ -15,6 +15,7 @@ const color = {
     white: '#FFFFFF',
     lightgray: '#E4E4E4',
     gray: '#A9A9A9',
+    darkgray: '#727272',
     black: '#000000',
   },
   border: {

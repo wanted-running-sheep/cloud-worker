@@ -23,3 +23,17 @@ export const Transportations = [
 export type ApiUrlType = typeof ApiUrlEnum[keyof typeof ApiUrlEnum];
 export type InputNameType = typeof InputNameEnum[keyof typeof InputNameEnum];
 export type TransportationType = typeof Transportations[number];
+
+export const TitleIconEnum = {
+  CLOSE: 'close',
+  ARROW: 'arrow',
+} as const;
+
+export type TitleType = typeof TitleIconEnum[keyof typeof TitleIconEnum];
+
+export const ContentTypeEnum = {
+  PRIVACY: 'privacy',
+  THIRDPARTY: 'thirdParty',
+};
+
+export type ContentType = typeof ContentTypeEnum[keyof typeof ContentTypeEnum];
