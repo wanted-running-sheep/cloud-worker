@@ -44,9 +44,11 @@ const createData = () => {
   };
 
   const randomPhone = () => {
-    return `010-${Math.floor(Math.random() * 9999)}-${Math.floor(
-      Math.random() * 9999
-    )}`;
+    let str = '';
+    for (let i = 0; i < 4; i++) {
+      str += Math.floor(Math.random() * 10);
+    }
+    return str;
   };
 
   for (let i = 1; i <= 100; i++) {
@@ -63,7 +65,7 @@ const createData = () => {
         city: '서울',
         district: '강동구',
       },
-      phone: randomPhone(),
+      phone: `010-${randomPhone()}-${randomPhone()}`,
       email: `test${i}@gmail.com`,
       transportation: randomTransports(Math.floor(Math.random() * 8)),
       isWinning: isWinnings[i % 2],
