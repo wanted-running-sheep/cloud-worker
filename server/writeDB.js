@@ -65,7 +65,7 @@ const createData = () => {
         city: '서울',
         district: '강동구',
       },
-      phone: `010-${randomPhone()}-${randomPhone()}`,
+      phone: `010${randomPhone()}${randomPhone()}`,
       email: `test${i}@gmail.com`,
       transportation: randomTransports(Math.floor(Math.random() * 8)),
       isWinning: isWinnings[i % 2],
