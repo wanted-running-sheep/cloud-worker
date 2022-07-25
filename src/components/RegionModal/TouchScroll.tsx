@@ -6,8 +6,6 @@ import Loading from '../Loading';
 
 const TouchScroll = () => {
   const { regions, getRegionData } = useRegionModel();
-
-  const [city, setCity] = useState(DEFAULT_SELECTED_CITY);
   const [region, setRegion] = useState<{ city: string; district: string }>({
     city: DEFAULT_SELECTED_CITY,
     district: '',
@@ -16,7 +14,6 @@ const TouchScroll = () => {
   const onClickCity = (city: string) => {
     if (region.city === city) return;
 
-    setCity(city);
     setRegion({ city, district: '' });
   };
 
@@ -45,7 +42,7 @@ const TouchScroll = () => {
         ))}
       </ScrollWrapper>
       <ScrollWrapper>
-        {regions[city].map((district) => (
+        {regions[region.city].map((district) => (
           <ScrollItem
             key={district}
             onClick={() => onClickDistrict(district)}
