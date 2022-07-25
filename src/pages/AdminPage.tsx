@@ -11,7 +11,11 @@ const AdminPage = () => {
   }, []);
 
   console.log(users);
-  return <div>AdminPage</div>;
+  return (
+    <>
+      <SectionHeader data={users} />
+    </>
+  );
 };
 
 export default AdminPage;
