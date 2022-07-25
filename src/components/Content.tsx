@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 interface ContentProps {
-  title?: 'privacy' | 'thirdParty';
+  title: 'privacy' | 'thirdParty';
 }
 
 const Content = ({ title }: ContentProps) => {
@@ -73,7 +73,7 @@ const Wrapper = styled.div`
     line-height: 1.2rem;
     margin-bottom: 20px;
     &:nth-child(2) {
-      color: ${({ theme }) => theme.color.font.gray};
+      color: ${({ theme }) => theme.color.font.darkgray};
     }
   }
 `;

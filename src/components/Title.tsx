@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { LeftDirection, Close } from '@/assets/icons';
+import { TITLE_TYPE } from '@/constants/index';
+//TODO pr question: enum.ts 사용법? type과 constants가 같이 있는 interface.
 
 interface TitleProps {
   title: string;
@@ -20,23 +22,18 @@ export default Title;
 
 const Wrapper = styled.div<{ iconType: string }>`
   width: 100%;
-  padding: 10px;
+  padding: 15px 5px;
   margin-bottom: 10px;
   border-bottom: 1px solid ${({ theme }) => theme.color.border.lightgray};
-  position: relative;
-  ${({ theme, iconType }) =>
-    iconType === 'close'
-      ? theme.mixins.flexBox('center', 'center')
-      : theme.mixins.flexBox('center', 'flex-start')};
+  ${({ theme }) => theme.mixins.flexBox('center', 'center')};
   div {
-    position: absolute;
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
+    flex: ${({ iconType }) => (iconType === 'close' ? 0 : 1)};
+    padding-right: ${({ iconType }) => (iconType === 'close' ? '20px' : 0)};
+    text-align: left;
+    box-sizing: border-box;
   }
   h2 {
+    flex: 2;
     font-size: 1.3rem;
-    line-height: 2rem;
-    margin: 0 50px;
   }
 `;
