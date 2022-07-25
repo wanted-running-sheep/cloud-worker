@@ -1,14 +1,17 @@
-import React from 'react';
+import useApplyUserModel from '@/api/models/useApplyUserModel';
+import React, { useEffect } from 'react';
 
 import SectionHeader from '@/components/SectionHeader';
 
 const AdminPage = () => {
-  return (
-    <>
-      <SectionHeader></SectionHeader>
-      <span>테이블 영역</span> {/* 추후 컴포넌트로 변경 할 것 */}
-    </>
-  );
+  const { users, getUserData } = useApplyUserModel();
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  console.log(users);
+  return <div>AdminPage</div>;
 };
 
 export default AdminPage;
