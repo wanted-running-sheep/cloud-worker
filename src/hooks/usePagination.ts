@@ -13,9 +13,9 @@ const usePagination = (users: UserInterface[]) => {
   //현재 페이지
   const [currentPage, setCurrentPage] = useState(1);
   //이전 열개목록 보여주는 아이콘 표시 여부
-  const prevPageFlag = currentPage > 10;
+  const prevPageFlag = currentPage > MAX_PAGE_LIST_CNT;
   //다음 열개목록 보여주는 아이콘 표시 여부
-  const nextPageFlag = TOTAL_PAGE - currentPage > 10;
+  const nextPageFlag = TOTAL_PAGE - currentPage >= MAX_PAGE_LIST_CNT;
 
   //start ~ end 까지의 배열 생성
   const pageRange = (start: number, end: number) => {
@@ -55,6 +55,7 @@ const usePagination = (users: UserInterface[]) => {
     */
     if (currentPage % MAX_PAGE_LIST_CNT === 0) {
       const firstPageNum = (currentPage / MAX_PAGE_LIST_CNT - 1) * 10 + 1;
+      console.log(firstPageNum);
       return pageRange(firstPageNum, currentPage);
     }
 
