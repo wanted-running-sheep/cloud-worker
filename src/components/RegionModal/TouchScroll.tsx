@@ -61,7 +61,7 @@ export default TouchScroll;
 const Wrapper = styled.div`
   display: flex;
   width: 100%;
-  height: 45%;
+  height: 50%;
   padding: 10px;
   gap: 10px;
 `;
@@ -69,7 +69,7 @@ const Wrapper = styled.div`
 const ScrollWrapper = styled.ul`
   width: 50%;
   height: 100%;
-  overflow-y: scroll;
+  ${({ theme }) => theme.mixins.scrollSnap.parent()}
   ${({ theme }) => theme.mixins.noScrollBar}
 `;
 
@@ -78,6 +78,7 @@ const ScrollItem = styled.li<{ isActive: boolean }>`
   width: 100%;
   height: calc(100% / 3);
   cursor: pointer;
+  ${({ theme }) => theme.mixins.scrollSnap.child()}
   &:hover {
     background-color: ${({ theme }) => theme.color.background.lightgray};
   }
