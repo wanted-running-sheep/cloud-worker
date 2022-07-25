@@ -1,14 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
+import { ContentTypeEnum, ContnetType } from '@/@types/enum';
 
 interface ContentProps {
-  title: 'privacy' | 'thirdParty';
+  type: ContnetType;
 }
 
-const Content = ({ title }: ContentProps) => {
+const Content = ({ type }: ContentProps) => {
   return (
     <Wrapper>
-      {title === 'privacy' ? (
+      {type === ContentTypeEnum.PRIVACY ? (
         <h1>
           <b>개인(신용)정보</b> <br />
           처리방침에 대한 동의안내

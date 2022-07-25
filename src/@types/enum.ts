@@ -11,3 +11,17 @@ export const InputNameEnum = {
 } as const;
 
 export type InputNameType = typeof InputNameEnum[keyof typeof InputNameEnum];
+
+export const TitleIconEnum = {
+  CLOSE: 'close',
+  ARROW: 'arrow',
+} as const;
+
+export type TitleType = typeof TitleIconEnum[keyof typeof TitleIconEnum];
+
+export const ContentTypeEnum = {
+  PRIVACY: 'privacy',
+  THIRDPARTY: 'thirdParty',
+};
+
+export type ContnetType = typeof ContentTypeEnum[keyof typeof ContentTypeEnum];
