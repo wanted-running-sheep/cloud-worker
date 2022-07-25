@@ -90,16 +90,18 @@ const DistrictTitleContainer = styled.div`
 `;
 
 const ButtonWrapper = styled.div`
-  padding: 10px;
+  display: flex;
+  flex-direction: column-reverse;
   flex-grow: 1;
+  padding: 10px;
 `;
 
 const RoundedButton = styled.button`
   width: 100%;
-  height: 100%;
   /* padding: 10px; */
   border-radius: 10px;
   background-color: ${({ theme }) => theme.color.button.darkbrown};
   color: ${({ theme }) => theme.color.font.white};
   font-weight: bold;
+  padding: 20px 0px;
 `;
