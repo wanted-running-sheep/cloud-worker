@@ -1,23 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import RoundButton from '@/components/RoundButton';
+import { Transportations, TransportationType } from '@/@types/enum';
 
 const TransportationList = () => {
-  const transportations = [
-    '버스',
-    '지하철',
-    '택시',
-    'KTX/기차',
-    '도보',
-    '자전거',
-    '전동킥보드',
-    '자가용',
-  ];
+  const [isClicked, setIsClicked] = useState<TransportationType[]>([]);
+
+  const toggleButton = (transportation: TransportationType) => {
+    const selectedIndex = isClicked.indexOf(transportation);
+    if (selectedIndex >= 0) {
+      setIsClicked((prev) => {
+        return prev.filter((_, index) => selectedIndex !== index);
+      });
+
+      return;
+    }
+
+    setIsClicked((prev) => [...prev, transportation]);
+  };
 
   return (
     <Wrapper>
-      {transportations.map((transportation, index) => (
-        <RoundButton key={index} showText={transportation} />
+      {Transportations.map((transportation, index) => (
+        <RoundButton
+          key={index}
+          showText={transportation}
+          isClicked={isClicked.includes(transportation)}
+          onClick={() => toggleButton(transportation)}
+        />
       ))}
     </Wrapper>
   );

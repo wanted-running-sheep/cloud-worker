@@ -13,6 +13,7 @@ interface RoundButtonProps extends RoundButtonWithCssProps {
   key?: number;
   showText: string;
   disabled?: boolean;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const RoundButton = ({
@@ -24,22 +25,15 @@ const RoundButton = ({
   borderRadius = '30px',
   ...otherProps
 }: RoundButtonProps) => {
-  const [isClicked, setIsClicked] = useState(false);
-
-  const toggleButton = () => {
-    setIsClicked((preview) => !preview);
-  };
-
   return (
     <DefaultButton
-      isClicked={isClicked}
       disabled={disabled}
       width={width}
       margin={margin}
       padding={padding}
       border={border}
       borderRadius={borderRadius}
-      onClick={toggleButton}
+      {...otherProps}
     >
       {otherProps.showText}
     </DefaultButton>
