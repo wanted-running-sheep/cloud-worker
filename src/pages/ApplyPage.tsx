@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import useRegionModel from '@/api/models/useRegion';
+import useRegionModel from '@/api/models/useRegionModel';
 
 const ApplyPage = () => {
   const { region, getRegionData } = useRegionModel();
