@@ -2,6 +2,8 @@ import useApplyUserModel from '@/api/models/useApplyUserModel';
 import React, { useEffect } from 'react';
 
 import SectionHeader from '@/components/SectionHeader';
+import Pagination from '@/components/Pagination';
+import Loading from '@/components/Loading';
 
 const AdminPage = () => {
   const { users, getUserData } = useApplyUserModel();
@@ -10,8 +12,9 @@ const AdminPage = () => {
     getUserData();
   }, []);
 
-  console.log(users);
-  return <div>AdminPage</div>;
+  if (!users.length) return <Loading />;
+
+  return <Pagination users={users} />;
 };
 
 export default AdminPage;
