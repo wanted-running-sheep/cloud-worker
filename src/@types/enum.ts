@@ -24,4 +24,4 @@ export const ContentTypeEnum = {
   THIRDPARTY: 'thirdParty',
 };
 
-export type ContnetType = typeof ContentTypeEnum[keyof typeof ContentTypeEnum];
+export type ContentType = typeof ContentTypeEnum[keyof typeof ContentTypeEnum];

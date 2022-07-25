@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ContentTypeEnum, ContnetType } from '@/@types/enum';
+import { ContentTypeEnum, ContentType } from '@/@types/enum';
 
 interface ContentProps {
-  type: ContnetType;
+  type: ContentType;
 }
 
 const Content = ({ type }: ContentProps) => {
