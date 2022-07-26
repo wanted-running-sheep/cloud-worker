@@ -3,7 +3,11 @@ import styled from 'styled-components';
 import RoundButton from '@/components/RoundButton';
 import { Transportations, TransportationType } from '@/@types/enum';
 
-const TransportationList = () => {
+interface TransportationListProps {
+  className?: string;
+}
+
+const TransportationList = ({ className }: TransportationListProps) => {
   const [isClicked, setIsClicked] = useState<TransportationType[]>([]);
 
   const toggleButton = (transportation: TransportationType) => {
@@ -20,7 +24,7 @@ const TransportationList = () => {
   };
 
   return (
-    <Wrapper>
+    <Wrapper className={className}>
       {Transportations.map((transportation, index) => (
         <RoundButton
           key={index}
