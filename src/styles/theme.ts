@@ -21,6 +21,7 @@ const color = {
   border: {
     lightgray: '#E1E1E1',
     red: '#F55859',
+    darkblue: '#4B617A',
   },
   button: {
     lightgray: '#F5F5F5',

@@ -1,27 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import RoundButton from '@/components/RoundButton';
-import { Transportations, TransportationType } from '@/@types/enum';
+import useToggleButton from '@/hooks/useToggleButton';
+import {
+  Transportations,
+  TransportationType,
+  ButtonTypeEnum,
+} from '@/@types/enum';
 
 interface TransportationListProps {
   className?: string;
 }
 
 const TransportationList = ({ className }: TransportationListProps) => {
-  const [isClicked, setIsClicked] = useState<TransportationType[]>([]);
-
-  const toggleButton = (transportation: TransportationType) => {
-    const selectedIndex = isClicked.indexOf(transportation);
-    if (selectedIndex >= 0) {
-      setIsClicked((prev) => {
-        return prev.filter((_, index) => selectedIndex !== index);
-      });
-
-      return;
-    }
-
-    setIsClicked((prev) => [...prev, transportation]);
-  };
+  const { selectedList, onToggleButton } = useToggleButton<TransportationType>(
+    ButtonTypeEnum.MULTIPLE
+  );
 
   return (
     <Wrapper className={className}>
@@ -29,8 +23,8 @@ const TransportationList = ({ className }: TransportationListProps) => {
         <RoundButton
           key={index}
           showText={transportation}
-          isClicked={isClicked.includes(transportation)}
-          onClick={() => toggleButton(transportation)}
+          isClicked={selectedList.includes(transportation)}
+          onClick={() => onToggleButton(transportation)}
         />
       ))}
     </Wrapper>
