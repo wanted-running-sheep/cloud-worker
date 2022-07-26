@@ -5,7 +5,10 @@ import Pagination from './Pangination';
 import Table from './Table';
 import styled from 'styled-components';
 
-const UserList = ({ users }: { users: UserInterface[] }) => {
+interface UserListProps {
+  users: UserInterface[];
+}
+const UserList = ({ users }: UserListProps) => {
   const { pageNums, setCurrentPage, prevPageFlag, nextPageFlag, sliceUsers } =
     usePagination(users);
 

@@ -1,10 +1,9 @@
 import React from 'react';
 import { LeftDirection } from '@/assets/icons';
-import RightDirection from '@/assets/icons/RightDirection';
+import { RightDirection } from '@/assets/icons/';
 import styled from 'styled-components';
 import { SetStateType } from '@/@types/react';
 import { useNavigate } from 'react-router-dom';
-import path from 'path';
 import { ApiUrlEnum } from '@/@types/enum';
 
 interface PaginationProps {
