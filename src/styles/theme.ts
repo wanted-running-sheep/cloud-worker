@@ -22,6 +22,7 @@ const color = {
     lightgray: '#E1E1E1',
     red: '#F55859',
     darkblue: '#4B617A',
+    black: '#000000',
   },
   button: {
     lightgray: '#F5F5F5',

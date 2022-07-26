@@ -1,6 +1,6 @@
-const INDEX_OF_REGION = 4;
-const INDEX_OF_PHONE = 5;
-const INDEX_OF_TRANSPORTATION = 7;
+const INDEX_OF_REGION = 5;
+const INDEX_OF_PHONE = 6;
+const INDEX_OF_TRANSPORTATION = 8;
 const DOWNLOAD_FILE_NAME_PREFIX = 'apply_user_';
 
 const formatProperDataForCsv = <T>(info: T) => {

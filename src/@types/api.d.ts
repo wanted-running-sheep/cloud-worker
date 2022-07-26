@@ -6,6 +6,7 @@ declare module 'request' {
   type GenderType = 'F' | 'M';
 
   interface UserInterface {
+    id: number;
     name: string;
     gender: GenderType;
     applyDate: string;

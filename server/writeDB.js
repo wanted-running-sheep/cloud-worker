@@ -13,7 +13,7 @@ function dateFormat(date) {
   return date.getFullYear() + '-' + month + '-' + day;
 }
 
-const createData = (n) => {
+const createData = (range) => {
   const data = {
     applyUser: [],
   };
@@ -51,8 +51,9 @@ const createData = (n) => {
     return str;
   };
 
-  for (let i = 1; i <= n; i++) {
+  for (let i = 1; i <= range; i++) {
     data.applyUser.push({
+      id: i,
       name: `홍길동${i}`,
       gender: genders[i % 2],
       applyDate: dateFormat(
@@ -65,7 +66,7 @@ const createData = (n) => {
         city: '서울',
         district: '강동구',
       },
-      phone: `010${randomPhone()}${randomPhone()}`,
+      phone: `010-${randomPhone()}-${randomPhone()}`,
       email: `test${i}@gmail.com`,
       transportation: randomTransports(Math.floor(Math.random() * 8)),
       isWinning: isWinnings[i % 2],
