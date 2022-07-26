@@ -1,32 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Checked } from '@/assets/icons';
+import { ChangeEventType } from '@/@types/react';
 
 interface RadioProps {
   name: string; //버튼 그룹. ex)성별 gender
-  label: string[]; //표면적 이름 ex)남자 or 여자
-  value: string[]; //데이터값 ex) male or female
+  labels: string[]; //표면적 이름 ex)남자 or 여자
+  values: string[]; //데이터값 ex) male or female
 }
 
-const Radio = ({ name, label, value }: RadioProps) => {
-  const [selected, setSelected] = useState<String>();
+const Radio = ({ name, labels, values }: RadioProps) => {
+  const [selected, setSelected] = useState<string>();
 
-  const radioHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const radioHandler = (event: ChangeEventType<HTMLInputElement>) => {
     setSelected(event.target.value);
   };
 
   return (
     <Wrapper>
-      {label.map((label, index) => (
+      {labels.map((label, index) => (
         <RadioGroup key={index}>
           <input
             type="radio"
             name={name}
-            id={value[index]}
-            value={value[index]}
+            id={values[index]}
+            value={values[index]}
             onChange={radioHandler}
           />
-          <label htmlFor={value[index]}>
+          <label htmlFor={values[index]}>
             <Checked />
             {label}
           </label>
@@ -57,7 +58,6 @@ const RadioGroup = styled.div`
     }
   }
   label {
-    cursor: pointer;
     ${({ theme }) => theme.mixins.flexBox('center', 'flex-start')};
     color: ${({ theme }) => theme.color.font.gray};
   }
