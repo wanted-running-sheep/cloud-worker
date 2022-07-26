@@ -52,7 +52,7 @@ const Table = ({ users }: TableProps) => {
                 <td>{index + 1}</td>
                 <td>{user.applyDate}</td>
                 <td>{user.name}</td>
-                <td>{user.gender}</td>
+                <td>{user.gender === 'M' ? '남' : '여'}</td>
                 <td>{user.birth}</td>
                 <td>{user.phone}</td>
                 <td>{user.email}</td>
@@ -72,18 +72,19 @@ export default Table;
 
 const Article = styled.article`
   width: 100%;
+  ul {
+    display: flex;
+    margin-bottom: 20px;
+  }
   ul li {
-    float: left;
     ${({ theme }) => theme.mixins.flexBox('center', 'center')};
     width: 50%;
     height: 30px;
+    line-height: 30px;
     text-align: center;
-    border: 1px solid #000;
-    margin-bottom: 20px;
+    border: 1px solid ${({ theme }) => theme.color.border.black};
   }
-  table,
-  thead,
-  tr {
+  table {
     width: 100%;
   }
   th {
@@ -91,7 +92,7 @@ const Article = styled.article`
     line-height: 1.5rem;
   }
   td {
-    font-size: 0.7rem;
+    font-size: 1rem;
     line-height: 1.2rem;
     text-align: center;
   }
