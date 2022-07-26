@@ -2,6 +2,10 @@ import useApplyUserModel from '@/api/models/useApplyUserModel';
 import React, { useEffect } from 'react';
 
 import SectionHeader from '@/components/SectionHeader';
+import Pagination from '@/components/UserList/Pangination';
+import Loading from '@/components/Loading';
+import Table from '@/components/UserList/Table';
+import UserList from '@/components/UserList/UserList';
 
 const AdminPage = () => {
   const { users, getUserData } = useApplyUserModel();
@@ -10,10 +14,12 @@ const AdminPage = () => {
     getUserData();
   }, []);
 
-  console.log(users);
+  if (!users.length) return <Loading />;
+
   return (
     <>
       <SectionHeader data={users} />
+      <UserList users={users} />
     </>
   );
 };
