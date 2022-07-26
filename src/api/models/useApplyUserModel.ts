@@ -21,9 +21,14 @@ const useApplyUserModel = () => {
     }
   };
 
+  const patchUser = async <T>(id: number, data: T) => {
+    return await apiRequest.patch<T>(ApiUrlEnum.APPLYUSER, id, data);
+  };
+
   return {
     users,
     getUserData,
+    patchUser,
   };
 };
 

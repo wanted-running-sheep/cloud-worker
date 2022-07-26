@@ -13,7 +13,7 @@ function dateFormat(date) {
   return date.getFullYear() + '-' + month + '-' + day;
 }
 
-const createData = () => {
+const createData = (range) => {
   const data = {
     applyUser: [],
   };
@@ -51,8 +51,9 @@ const createData = () => {
     return str;
   };
 
-  for (let i = 1; i <= 100; i++) {
+  for (let i = 1; i <= range; i++) {
     data.applyUser.push({
+      id: i,
       name: `홍길동${i}`,
       gender: genders[i % 2],
       applyDate: dateFormat(
@@ -76,6 +77,6 @@ const createData = () => {
 };
 
 const regions = JSON.parse(fs.readFileSync(region, 'utf-8'));
-const data = { ...regions, ...createData() };
+const data = { ...regions, ...createData(1087) };
 
 fs.writeFileSync(db, JSON.stringify(data));

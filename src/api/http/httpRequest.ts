@@ -15,4 +15,8 @@ export class HttpRequest {
   post<T>(url: ApiUrlType, data: T) {
     return this.service.post(url, data);
   }
+
+  patch<T>(url: ApiUrlType, id: number, data: T) {
+    return this.service.patch(`${url}/${id}`, data);
+  }
 }

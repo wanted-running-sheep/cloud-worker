@@ -4,6 +4,7 @@ declare module 'request' {
   }
 
   interface UserInterface {
+    id: number;
     name: string;
     gender: 'F' | 'M';
     applyDate: string;

@@ -1,8 +1,8 @@
-import React, { MouseEventHandler, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { UserInterface } from 'request';
 import styled from 'styled-components';
-import Checkbox from './Checkbox';
-
+import { ChangeEventType } from '@/@types/react';
+import useApplyUserModel from '@/api/models/useApplyUserModel';
 interface TableProps {
   users: UserInterface[];
 }
@@ -22,18 +22,20 @@ const tableHeads = [
 ];
 
 const Table = ({ users }: TableProps) => {
+  const { patchUser } = useApplyUserModel();
+
   const [tab, setTab] = useState<number>(1);
 
   const changeTab = (tabNumber: number) => {
     setTab(tabNumber);
   };
 
-  //참가유무 버튼 onClick method
-  const isWinningHandler = (isWinningValue: boolean) => {
-    const [checked, setChecked] = useState(isWinningValue);
-    setChecked((prevState) => !prevState);
-    // isWinningValue = checked;
-    console.log(`checked: ${checked}, isWinning: ${isWinningValue}`);
+  const changeHandler = (
+    event: ChangeEventType<HTMLInputElement>,
+    id: number
+  ) => {
+    const { checked } = event.target;
+    patchUser(id, { isWinning: checked });
   };
 
   useEffect(() => {
@@ -58,8 +60,8 @@ const Table = ({ users }: TableProps) => {
         <tbody>
           {users.map((user, index) => {
             return (
-              <tr key={index}>
-                <td>{index + 1}</td>
+              <tr key={user.id}>
+                <td>{user.id}</td>
                 <td>{user.applyDate}</td>
                 <td>{user.name}</td>
                 <td>{user.gender === 'M' ? '남' : '여'}</td>
@@ -67,17 +69,15 @@ const Table = ({ users }: TableProps) => {
                 <td>{user.phone}</td>
                 <td>{user.email}</td>
                 <td>{user.transportation}</td>
-                {/* [ ] hover 시에 목록이 나오도록! */}
+                {/* [ ] hover 시에 목록이 나오도록 */}
                 <td>{user.region.city + ' ' + user.region.district}</td>
 
                 <td>
-                  {user.isWinning ? 'Y' : 'N'}
-                  {/* [ ] 체크박스로 가능하도록. state hook 사용 */}
+                  {/* [x] 체크박스로 가능하도록. state hook 사용 */}
                   <input
                     type="Checkbox"
-                    id={(index + 1).toString()}
-                    checked={user.isWinning}
-                    onClick={() => isWinningHandler(user.isWinning)}
+                    defaultChecked={user.isWinning}
+                    onChange={(event) => changeHandler(event, user.id)}
                   />
                 </td>
               </tr>

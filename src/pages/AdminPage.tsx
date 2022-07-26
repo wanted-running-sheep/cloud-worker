@@ -15,7 +15,6 @@ const AdminPage = () => {
   return (
     <>
       <SectionHeader data={users} />
-      <header>header</header>
       <Table users={users} />
     </>
   );
