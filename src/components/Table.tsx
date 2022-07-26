@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { MouseEventHandler, useEffect, useState } from 'react';
 import { UserInterface } from 'request';
 import styled from 'styled-components';
+import Checkbox from './Checkbox';
 
 interface TableProps {
   users: UserInterface[];
@@ -27,12 +28,21 @@ const Table = ({ users }: TableProps) => {
     setTab(tabNumber);
   };
 
+  //참가유무 버튼 onClick method
+  const isWinningHandler = (isWinningValue: boolean) => {
+    const [checked, setChecked] = useState(isWinningValue);
+    setChecked((prevState) => !prevState);
+    // isWinningValue = checked;
+    console.log(`checked: ${checked}, isWinning: ${isWinningValue}`);
+  };
+
   useEffect(() => {
     console.log(users, tab); //각 탭의 users 데이터로 필터되도록
   }, [tab]);
 
   return (
     <Article>
+      {/* [ ] 2021, 2022로 필터링 */}
       <ul>
         <li onClick={() => changeTab(1)}>1차 모집</li>
         <li onClick={() => changeTab(2)}>2차 모집</li>
@@ -57,8 +67,19 @@ const Table = ({ users }: TableProps) => {
                 <td>{user.phone}</td>
                 <td>{user.email}</td>
                 <td>{user.transportation}</td>
+                {/* [ ] hover 시에 목록이 나오도록! */}
                 <td>{user.region.city + ' ' + user.region.district}</td>
-                <td>{user.isWinning ? 'Y' : 'N'}</td>
+
+                <td>
+                  {user.isWinning ? 'Y' : 'N'}
+                  {/* [ ] 체크박스로 가능하도록. state hook 사용 */}
+                  <input
+                    type="Checkbox"
+                    id={(index + 1).toString()}
+                    checked={user.isWinning}
+                    onClick={() => isWinningHandler(user.isWinning)}
+                  />
+                </td>
               </tr>
             );
           })}
