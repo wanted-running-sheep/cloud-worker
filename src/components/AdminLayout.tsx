@@ -40,5 +40,5 @@ const Aside = styled.aside`
 const Section = styled.section`
   width: 100%;
   height: 100%;
-  padding: 60px 30px 7px 30px;
+  padding: 50px 30px 7px 30px;
 `;

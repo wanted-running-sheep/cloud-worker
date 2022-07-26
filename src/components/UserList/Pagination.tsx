@@ -1,6 +1,5 @@
 import React from 'react';
-import { LeftDirection } from '@/assets/icons';
-import { RightDirection } from '@/assets/icons/';
+import { LeftDirection, RightDirection } from '@/assets/icons';
 import styled from 'styled-components';
 import { SetStateType } from '@/@types/react';
 import { useNavigate } from 'react-router-dom';
@@ -8,6 +7,7 @@ import { ApiUrlEnum } from '@/@types/enum';
 
 interface PaginationProps {
   pageNums: number[];
+  currentPage: number;
   setCurrentPage: SetStateType<number>;
   prevPageFlag: boolean;
   nextPageFlag: boolean;
@@ -15,6 +15,7 @@ interface PaginationProps {
 
 const Pagination = ({
   pageNums,
+  currentPage,
   setCurrentPage,
   prevPageFlag,
   nextPageFlag,
@@ -41,6 +42,14 @@ const Pagination = ({
     });
   };
 
+  const getCurrentPageNumber = (urlPageNumber: number) => {
+    const MAX_PAGE_LIST_CNT = 10;
+    const currentElementOrder = urlPageNumber % MAX_PAGE_LIST_CNT;
+
+    if (currentElementOrder === 0) return urlPageNumber === 10 ? 10 : 10 + 1;
+    return urlPageNumber > 10 ? currentElementOrder + 1 : currentElementOrder;
+  };
+
   return (
     <Wrapper>
       {prevPageFlag && (
@@ -49,7 +58,11 @@ const Pagination = ({
         </PageList>
       )}
       {pageNums.map((pageNum) => (
-        <PageList key={pageNum} onClick={() => onClickPage(pageNum)}>
+        <PageList
+          key={pageNum}
+          clickedPage={getCurrentPageNumber(currentPage)}
+          onClick={() => onClickPage(pageNum)}
+        >
           {pageNum}
         </PageList>
       ))}
@@ -69,7 +82,7 @@ const Wrapper = styled.ul`
   gap: 5px;
   margin-top: 20px;
 `;
-const PageList = styled.li`
+const PageList = styled.li<{ clickedPage?: number }>`
   width: 30px;
   height: 30px;
   padding: 5px;
@@ -79,7 +92,13 @@ const PageList = styled.li`
   font-size: 0.8rem;
   cursor: pointer;
 
+  &:nth-child(${({ clickedPage }) => clickedPage}) {
+    background: ${({ theme }) => theme.color.background.black};
+    color: ${({ theme }) => theme.color.font.white};
+  }
+
   &:hover {
-    opacity: 0.5;
+    background: ${({ theme }) => theme.color.background.gray};
+    color: ${({ theme }) => theme.color.font.black};
   }
 `;

@@ -8,4 +8,7 @@ export { default as RegionModal } from './RegionModal';
 export { default as Loading } from './Loading';
 export { default as SearchBar } from './SearchBar';
 
-export { default as UserList } from '@/components/UserList/UserList';
+export { default as Tab } from '@/components/UserList/Tab';
+export { default as Table } from '@/components/UserList/Table';
+export { default as Tooltip } from '@/components/UserList/Tooltip';
+export { default as Pagination } from '@/components/UserList/Pagination';

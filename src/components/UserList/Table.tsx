@@ -1,8 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { UserInterface } from 'request';
 import styled from 'styled-components';
+
+import { Tooltip } from '@/components';
 import { ChangeEventType } from '@/@types/react';
+import { TransportationType } from '@/@types/enum';
 import useApplyUserModel from '@/api/models/useApplyUserModel';
+
+import { useNavigate } from 'react-router-dom';
 interface TableProps {
   users: UserInterface[];
 }
@@ -23,12 +28,9 @@ const tableHeads = [
 
 const Table = ({ users }: TableProps) => {
   const { patchUser } = useApplyUserModel();
+  const navigate = useNavigate();
 
-  const [tab, setTab] = useState<number>(1);
-
-  const changeTab = (tabNumber: number) => {
-    setTab(tabNumber);
-  };
+  const [isTrasportHover, setIsTransportHover] = useState<number>(0);
 
   const changeHandler = (
     event: ChangeEventType<HTMLInputElement>,
@@ -38,17 +40,16 @@ const Table = ({ users }: TableProps) => {
     patchUser(id, { isWinning: checked });
   };
 
-  useEffect(() => {
-    console.log(users, tab); //각 탭의 users 데이터로 필터되도록
-  }, [tab]);
+  const formatTransportationList = (transportations: TransportationType[]) => {
+    const firstTrasportation = transportations[0];
+    const transportationLength = transportations.length - 1; //첫번째 값 제외
+
+    if (transportationLength <= 0) return firstTrasportation;
+    return `${firstTrasportation} 외 ${transportationLength}건`;
+  };
 
   return (
-    <Article>
-      {/* [ ] 2021, 2022로 필터링 */}
-      <ul>
-        <li onClick={() => changeTab(1)}>1차 모집</li>
-        <li onClick={() => changeTab(2)}>2차 모집</li>
-      </ul>
+    <Wrapper>
       <table>
         <thead>
           <tr>
@@ -68,12 +69,19 @@ const Table = ({ users }: TableProps) => {
                 <td>{user.birth}</td>
                 <td>{user.phone}</td>
                 <td>{user.email}</td>
-                <td>{user.transportation}</td>
-                {/* [ ] hover 시에 목록이 나오도록 */}
+                <TransportTd
+                  onMouseOver={() => setIsTransportHover(user.id)}
+                  onMouseOut={() => setIsTransportHover(0)}
+                >
+                  {formatTransportationList(user.transportation)}
+                  {isTrasportHover === user.id &&
+                    user.transportation.length > 1 && (
+                      <Tooltip transportation={user.transportation} />
+                    )}
+                </TransportTd>
                 <td>{user.region.city + ' ' + user.region.district}</td>
 
                 <td>
-                  {/* [x] 체크박스로 가능하도록. state hook 사용 */}
                   <input
                     type="checkbox"
                     defaultChecked={user.isWinning}
@@ -85,36 +93,21 @@ const Table = ({ users }: TableProps) => {
           })}
         </tbody>
       </table>
-    </Article>
+    </Wrapper>
   );
 };
 
 export default Table;
 
-const Article = styled.article`
-  width: 100%;
-  ul {
-    display: flex;
-    margin-bottom: 20px;
-  }
-  ul li {
-    ${({ theme }) => theme.mixins.flexBox()};
-    width: 50%;
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
-    border: 1px solid ${({ theme }) => theme.color.border.black};
-  }
-  table {
-    width: 100%;
-  }
-  th {
-    font-weight: 700;
-    line-height: 1.5rem;
-  }
-  td {
-    font-size: 1rem;
-    line-height: 1.2rem;
-    text-align: center;
-  }
+const Wrapper = styled.div`
+  background: ${({ theme }) => theme.color.background.lightgray};
+  height: calc(100% - 115px);
+  overflow-y: auto;
+  padding: 20px 5px 50px 5px;
+  border-radius: 0px 0px 15px 15px;
+`;
+const TransportTd = styled.td`
+  position: relative;
+  width: 200px;
+  cursor: pointer;
 `;
