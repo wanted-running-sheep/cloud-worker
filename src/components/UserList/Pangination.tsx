@@ -1,23 +1,45 @@
-import { LeftDirection } from '@/assets/icons';
-import usePagination from '@/hooks/usePagination';
 import React from 'react';
-import { UserInterface } from 'request';
+import { LeftDirection } from '@/assets/icons';
+import RightDirection from '@/assets/icons/RightDirection';
 import styled from 'styled-components';
+import { SetStateType } from '@/@types/react';
+import { useNavigate } from 'react-router-dom';
+import path from 'path';
+import { ApiUrlEnum } from '@/@types/enum';
 
 interface PaginationProps {
-  users: UserInterface[];
+  pageNums: number[];
+  setCurrentPage: SetStateType<number>;
+  prevPageFlag: boolean;
+  nextPageFlag: boolean;
 }
 
-const Pagination = ({ users }: PaginationProps) => {
-  const { pageNums, setCurrentPage, prevPageFlag, nextPageFlag } =
-    usePagination(users);
+const Pagination = ({
+  pageNums,
+  setCurrentPage,
+  prevPageFlag,
+  nextPageFlag,
+}: PaginationProps) => {
+  const navigate = useNavigate();
 
   const onClickPage = (currentPage: number) => {
     setCurrentPage(currentPage);
+    handleNavigation(currentPage);
   };
 
   const onClickPrevOrNext = (direction: number) => {
     setCurrentPage(pageNums[0] + direction);
+    handleNavigation(pageNums[0] + direction);
+  };
+
+  const handleNavigation = (pageNum: number) => {
+    const pathname = ApiUrlEnum.ADMIN;
+    const search = `?page=${pageNum}`;
+
+    navigate({
+      pathname,
+      search,
+    });
   };
 
   return (
@@ -34,7 +56,7 @@ const Pagination = ({ users }: PaginationProps) => {
       ))}
       {nextPageFlag && (
         <PageList onClick={() => onClickPrevOrNext(10)}>
-          <LeftDirection />
+          <RightDirection />
         </PageList>
       )}
     </Wrapper>
@@ -44,8 +66,9 @@ const Pagination = ({ users }: PaginationProps) => {
 export default Pagination;
 
 const Wrapper = styled.ul`
-  display: flex;
+  ${({ theme }) => theme.mixins.flexBox()}
   gap: 5px;
+  margin-top: 20px;
 `;
 const PageList = styled.li`
   width: 30px;
@@ -56,4 +79,8 @@ const PageList = styled.li`
   border-radius: 5px;
   font-size: 0.8rem;
   cursor: pointer;
+
+  &:hover {
+    opacity: 0.5;
+  }
 `;

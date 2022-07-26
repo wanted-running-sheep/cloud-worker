@@ -1,24 +1,25 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { UserInterface } from 'request';
 
 const usePagination = (users: UserInterface[]) => {
-  //한페이지에 보여줄 목록 수
-  const LIST_PER_PAGE = 20;
-  //총 페이지 수
-  const TOTAL_PAGE = Math.ceil(users.length / LIST_PER_PAGE);
-  //페이지네이션 최소 값
-  const MIN_PAGE_NUM = 1;
-  //보여줄 페이지네이션 개수
-  const MAX_PAGE_LIST_CNT = 10;
-  //현재 페이지
-  const [currentPage, setCurrentPage] = useState(1);
-  //이전 열개목록 보여주는 아이콘 표시 여부
-  const prevPageFlag = currentPage > MAX_PAGE_LIST_CNT;
-  //다음 열개목록 보여주는 아이콘 표시 여부
-  const nextPageFlag = TOTAL_PAGE - currentPage >= MAX_PAGE_LIST_CNT;
+  const { search } = useLocation();
+  const urlRef = useRef<URLSearchParams>();
+  if (!urlRef.current) urlRef.current = new URLSearchParams(search);
 
-  //start ~ end 까지의 배열 생성
-  const pageRange = (start: number, end: number) => {
+  const LIST_PER_PAGE = 20;
+  const TOTAL_PAGE = Math.ceil(users.length / LIST_PER_PAGE);
+  const MIN_PAGE_NUM = 1;
+  const MAX_PAGE_LIST_CNT = 10;
+  const PAGE = 'page';
+  const initialCurrentPage = urlRef.current.get(PAGE)
+    ? urlRef.current.get(PAGE)
+    : MIN_PAGE_NUM;
+
+  const [currentPage, setCurrentPage] = useState(Number(initialCurrentPage));
+  const prevPageFlag = currentPage > MAX_PAGE_LIST_CNT;
+
+  const convertRangeToArray = (start: number, end: number) => {
     const arr = [];
 
     for (let i = start; i <= end; i++) {
@@ -36,7 +37,7 @@ const usePagination = (users: UserInterface[]) => {
       1~10까지의 배열 리턴
     */
     if (currentPage < MAX_PAGE_LIST_CNT && TOTAL_PAGE >= MAX_PAGE_LIST_CNT) {
-      return pageRange(MIN_PAGE_NUM, MAX_PAGE_LIST_CNT);
+      return convertRangeToArray(MIN_PAGE_NUM, MAX_PAGE_LIST_CNT);
     }
 
     /* 
@@ -45,7 +46,7 @@ const usePagination = (users: UserInterface[]) => {
       1~총페이지 수 까지의 배열 리턴
     */
     if (currentPage < MAX_PAGE_LIST_CNT && TOTAL_PAGE < MAX_PAGE_LIST_CNT) {
-      return pageRange(MIN_PAGE_NUM, TOTAL_PAGE);
+      return convertRangeToArray(MIN_PAGE_NUM, TOTAL_PAGE);
     }
 
     /* 
@@ -54,9 +55,10 @@ const usePagination = (users: UserInterface[]) => {
       이전 10단위 +1 ~ 현재페이지 까지의 배열을 리턴
     */
     if (currentPage % MAX_PAGE_LIST_CNT === 0) {
-      const firstPageNum = (currentPage / MAX_PAGE_LIST_CNT - 1) * 10 + 1;
-      console.log(firstPageNum);
-      return pageRange(firstPageNum, currentPage);
+      const firstPageNum =
+        (currentPage / MAX_PAGE_LIST_CNT - MIN_PAGE_NUM) * MAX_PAGE_LIST_CNT +
+        MIN_PAGE_NUM;
+      return convertRangeToArray(firstPageNum, currentPage);
     }
 
     /* 
@@ -67,10 +69,12 @@ const usePagination = (users: UserInterface[]) => {
       총 페이지 수보다 크면 총페이지를 마지막 페이지로 설정
     */
     if (currentPage > MAX_PAGE_LIST_CNT) {
-      const firstPageNum = Math.floor(currentPage / MAX_PAGE_LIST_CNT) * 10 + 1;
-      const lastPageNum = firstPageNum + MAX_PAGE_LIST_CNT - 1;
+      const firstPageNum =
+        Math.floor(currentPage / MAX_PAGE_LIST_CNT) * MAX_PAGE_LIST_CNT +
+        MIN_PAGE_NUM;
+      const lastPageNum = firstPageNum + MAX_PAGE_LIST_CNT - MIN_PAGE_NUM;
 
-      return pageRange(firstPageNum, lastPageNum);
+      return convertRangeToArray(firstPageNum, lastPageNum);
     }
 
     return [];
@@ -81,7 +85,12 @@ const usePagination = (users: UserInterface[]) => {
     currentPage,
     setCurrentPage,
     prevPageFlag,
-    nextPageFlag,
+    nextPageFlag: createPagination().length >= MAX_PAGE_LIST_CNT,
+    LIST_PER_PAGE,
+    sliceUsers: users.slice(
+      (currentPage - MIN_PAGE_NUM) * LIST_PER_PAGE,
+      currentPage * LIST_PER_PAGE
+    ),
   };
 };
 

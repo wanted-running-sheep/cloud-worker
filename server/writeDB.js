@@ -76,6 +76,6 @@ const createData = (n) => {
 };
 
 const regions = JSON.parse(fs.readFileSync(region, 'utf-8'));
-const data = { ...regions, ...createData(999) };
+const data = { ...regions, ...createData(1087) };
 
 fs.writeFileSync(db, JSON.stringify(data));

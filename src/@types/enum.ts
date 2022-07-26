@@ -1,6 +1,7 @@
 export const ApiUrlEnum = {
   REGION: '/region',
   APPLYUSER: '/applyUser',
+  ADMIN: '/admin',
 } as const;
 
 export const InputNameEnum = {
