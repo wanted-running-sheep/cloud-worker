@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import Input from '@/components/Input';
-import Label from '@/components/Label';
-import TransportationList from '@/components/TransportationList';
-import Radio from '@/components/Radio';
-import Checkbox from '@/components/Checkbox';
-import RoundButton from '@/components/RoundButton';
-import RegionModal from '@/components/RegionModal';
+import {
+  Input,
+  Label,
+  TransportationList,
+  Radio,
+  Checkbox,
+  RoundButton,
+  RegionModal,
+} from '@/components';
 
 import { REGEX_FOR_VALIDATION } from '@/constants/validation';
 import { ClickEventType } from '@/@types/react';
@@ -31,7 +33,6 @@ const ApplyPage = () => {
         name="name"
         placeholder="홍길동 (한글만 입력 가능)"
         reg={REGEX_FOR_VALIDATION.NAME}
-        width="100%"
       />
       <Label title="성별" />
       <GenderRadio
@@ -45,13 +46,11 @@ const ApplyPage = () => {
         placeholder="YYYY.MM.DD (숫자만 입력 가능)"
         maxLength={10}
         reg={REGEX_FOR_VALIDATION.BIRTH}
-        width="100%"
       />
       <Label title="거주지역" />
       <InputField
         name="region"
         placeholder="거주지역 선택"
-        width="100%"
         onClick={handleClickedRegion}
       />
       <Label title="연락처" />
@@ -60,7 +59,6 @@ const ApplyPage = () => {
         placeholder="'-'없이 입력해 주세요 (숫자만 입력 가능)"
         maxLength={13}
         reg={REGEX_FOR_VALIDATION.PHONE}
-        width="100%"
       />
       <Label title="이메일" />
       <InputField
@@ -69,7 +67,6 @@ const ApplyPage = () => {
         reg={REGEX_FOR_VALIDATION.EMAIL}
         regWhiteList={true}
         validationBorder={true}
-        width="100%"
       />
       <Label
         title="주로 이용하는 교통수단"
