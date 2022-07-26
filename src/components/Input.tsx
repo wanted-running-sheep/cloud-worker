@@ -4,6 +4,7 @@ import { formatString } from '@/utils/formatString';
 import { InputNameType, InputNameEnum } from '@/@types/enum';
 
 import styled from 'styled-components';
+import { ChangeEventType, ClickEventType } from '@/@types/react';
 
 interface InputProps {
   name?: string;
@@ -16,7 +17,8 @@ interface InputProps {
   width?: string;
   validationBorder?: boolean;
   maxLength?: number;
-  onClick?: (event: React.MouseEvent<HTMLInputElement>) => void;
+  onClick?: (event: ClickEventType<HTMLInputElement>) => void;
+  onChangeInput: (event: ChangeEventType<HTMLInputElement>) => void;
 }
 
 const DEFAULT_HEIGHT = '30px';
@@ -28,6 +30,7 @@ const Input = ({
   validationBorder = false,
   height = DEFAULT_HEIGHT,
   width = DEFAULT_WIDTH,
+  onChangeInput,
   ...otherProps
 }: InputProps) => {
   const [isValid, setIsValid] = useState<boolean>(true);
@@ -76,7 +79,8 @@ const Input = ({
         {...otherProps}
         height={height}
         width={width}
-        onChange={handleChangeValue}
+        /* onChange={handleChangeValue} */
+        onChange={onChangeInput}
         validationBorder={isValid}
       />
     </div>

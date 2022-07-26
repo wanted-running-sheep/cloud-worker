@@ -8,11 +8,14 @@ import RoundButton from '@/components/RoundButton';
 import RegionModal from '@/components/RegionModal';
 
 import { REGEX_FOR_VALIDATION } from '@/constants/validation';
-import { ClickEventType } from '@/@types/react';
+import { ChangeEventType, ClickEventType } from '@/@types/react';
 
 import styled from 'styled-components';
+import useInputs from '@/hooks/useInputs';
 
 const ApplyPage = () => {
+  const { inputs, inputVal, setInputVal } = useInputs();
+
   const [isClickRegionField, setIsClickRegionField] = useState<boolean>(false);
   const [isAllPassValidation, setIsAllPassValidation] =
     useState<boolean>(false);
@@ -22,66 +25,60 @@ const ApplyPage = () => {
     setIsClickRegionField((prevState) => !prevState);
   };
 
-  const handleClickedApplyButton = () => {};
+  const handleClickedApplyButton = () => {
+    console.log(inputVal);
+  };
+
+  const onChangeInput = (
+    event: ChangeEventType<HTMLInputElement>,
+    reg?: RegExp
+  ) => {
+    const { name, value } = event.target;
+
+    setInputVal((prev) => ({ ...prev, [name]: value }));
+  };
 
   return (
     <div>
-      <Label title="이름" />
-      <InputField
-        name="name"
-        placeholder="홍길동 (한글만 입력 가능)"
-        reg={REGEX_FOR_VALIDATION.NAME}
-        width="100%"
-      />
-      <Label title="성별" />
-      <GenderRadio
-        name="gender"
-        labels={['남자', '여자']}
-        values={['M', 'F']}
-      />
-      <Label title="생년월일" />
-      <InputField
-        name="birth"
-        placeholder="YYYY.MM.DD (숫자만 입력 가능)"
-        maxLength={10}
-        reg={REGEX_FOR_VALIDATION.BIRTH}
-        width="100%"
-      />
-      <Label title="거주지역" />
-      <InputField
-        name="region"
-        placeholder="거주지역 선택"
-        width="100%"
-        onClick={handleClickedRegion}
-      />
-      <Label title="연락처" />
-      <InputField
-        name="phone"
-        placeholder="'-'없이 입력해 주세요 (숫자만 입력 가능)"
-        maxLength={13}
-        reg={REGEX_FOR_VALIDATION.PHONE}
-        width="100%"
-      />
-      <Label title="이메일" />
-      <InputField
-        name="email"
-        placeholder="MYD@snplab.com"
-        reg={REGEX_FOR_VALIDATION.EMAIL}
-        regWhiteList={true}
-        validationBorder={true}
-        width="100%"
-      />
-      <Label
-        title="주로 이용하는 교통수단"
-        description="주로 이용하는 교통수단을 모두 선택해 주세요"
-      />
-      <StyledTransportationList />
-      <AllAgreeRadio
-        name="agreement"
-        labels={['이용약관 모두 동의']}
-        values={['yes']}
-      />
-      <Hr />
+      {inputs.map((attr) => {
+        if (attr.type === 'radio') {
+          return (
+            <>
+              {attr.titleComponent && <Label title={attr.title} />}
+              {attr.name === 'gender' ? (
+                <GenderRadio
+                  name="gender"
+                  labels={attr.labels}
+                  values={attr.values}
+                  onChangeInput={onChangeInput}
+                />
+              ) : (
+                <>
+                  <AllAgreeRadio
+                    name="agreement"
+                    labels={['이용약관 모두 동의']}
+                    values={['yes']}
+                    onChangeInput={onChangeInput}
+                  />
+                  <Hr />
+                </>
+              )}
+            </>
+          );
+        }
+        return (
+          <>
+            <Label title={attr.title} />
+            <InputField
+              name={attr.name}
+              placeholder={attr.placeholder}
+              reg={attr.reg}
+              width="100%"
+              onChangeInput={onChangeInput}
+            />
+          </>
+        );
+      })}
       <Checkbox labelText="개인정보 처리방침 고지 (필수)" />
       <Checkbox labelText="제3자 정보제공 동의 (필수)" />
       <ApplyButton
@@ -89,7 +86,8 @@ const ApplyPage = () => {
         width="100%"
         borderRadius="8px"
         padding="15px 13px"
-        disabled={!isAllPassValidation}
+        /* disabled={!isAllPassValidation} */
+        disabled={false}
         onClick={handleClickedApplyButton}
       />
       {isClickRegionField && <RegionModal />}

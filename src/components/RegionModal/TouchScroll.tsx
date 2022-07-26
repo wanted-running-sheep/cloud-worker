@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import useRegionModel from '@/api/models/useRegion';
+import useRegionModel from '@/api/models/useRegionModel';
 import { DEFAULT_SELECTED_CITY } from '@/constants';
 import styled from 'styled-components';
 import Loading from '../Loading';

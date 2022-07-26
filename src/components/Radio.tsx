@@ -8,9 +8,16 @@ interface RadioProps {
   labels: string[]; //표면적 이름 ex)남자 or 여자
   values: string[]; //데이터값 ex) male or female
   className?: string;
+  onChangeInput: (event: ChangeEventType<HTMLInputElement>) => void;
 }
 
-const Radio = ({ name, labels, values, className }: RadioProps) => {
+const Radio = ({
+  name,
+  labels,
+  values,
+  className,
+  onChangeInput,
+}: RadioProps) => {
   const [selected, setSelected] = useState<string>();
 
   const radioHandler = (event: ChangeEventType<HTMLInputElement>) => {
@@ -26,7 +33,8 @@ const Radio = ({ name, labels, values, className }: RadioProps) => {
             name={name}
             id={values[index]}
             value={values[index]}
-            onChange={radioHandler}
+            onChange={onChangeInput}
+            /* onChange={radioHandler} */
           />
           <label htmlFor={values[index]}>
             <Checked />
