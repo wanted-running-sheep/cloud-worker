@@ -5,7 +5,7 @@ import { RegionDataInterface } from 'request';
 import { apiRequest } from '../instance';
 
 const useRegionModel = () => {
-  const [region, setRegion] = useState<RegionDataInterface>({});
+  const [regions, setRegions] = useState<RegionDataInterface>({});
 
   const getRegionData = async () => {
     try {
@@ -13,7 +13,7 @@ const useRegionModel = () => {
         await apiRequest.get<RegionDataInterface>(ApiUrlEnum.REGION);
 
       if (regionResponse) {
-        setRegion(regionResponse.data);
+        setRegions(regionResponse.data);
       }
     } catch (error) {
       console.log(error);
@@ -21,7 +21,7 @@ const useRegionModel = () => {
   };
 
   return {
-    region,
+    regions,
     getRegionData,
   };
 };

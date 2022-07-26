@@ -20,7 +20,7 @@ interface InputProps {
 }
 
 const DEFAULT_HEIGHT = '30px';
-const DEFAULT_WIDTH = '145px';
+const DEFAULT_WIDTH = '100%';
 
 const Input = ({
   reg = new RegExp(''),
