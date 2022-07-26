@@ -7,9 +7,10 @@ interface RadioProps {
   name: string; //버튼 그룹. ex)성별 gender
   labels: string[]; //표면적 이름 ex)남자 or 여자
   values: string[]; //데이터값 ex) male or female
+  className?: string;
 }
 
-const Radio = ({ name, labels, values }: RadioProps) => {
+const Radio = ({ name, labels, values, className }: RadioProps) => {
   const [selected, setSelected] = useState<string>();
 
   const radioHandler = (event: ChangeEventType<HTMLInputElement>) => {
@@ -17,7 +18,7 @@ const Radio = ({ name, labels, values }: RadioProps) => {
   };
 
   return (
-    <Wrapper>
+    <Wrapper className={className}>
       {labels.map((label, index) => (
         <RadioGroup key={index}>
           <input
