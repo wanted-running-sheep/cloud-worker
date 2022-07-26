@@ -75,7 +75,7 @@ const Table = ({ users }: TableProps) => {
                 <td>
                   {/* [x] 체크박스로 가능하도록. state hook 사용 */}
                   <input
-                    type="Checkbox"
+                    type="checkbox"
                     defaultChecked={user.isWinning}
                     onChange={(event) => changeHandler(event, user.id)}
                   />
