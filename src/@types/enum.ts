@@ -38,12 +38,19 @@ export const TitleIconEnum = {
 export const ContentTypeEnum = {
   PRIVACY: 'privacy',
   THIRDPARTY: 'thirdParty',
-};
+} as const;
+
+export const ButtonTypeEnum = {
+  MULTIPLE: 'multiple',
+  SINGLE: 'single',
+} as const;
 
 export type TransportationType = typeof Transportations[number];
+
 export type ApiUrlType = typeof ApiUrlEnum[keyof typeof ApiUrlEnum];
 export type InputNameType = typeof InputNameEnum[keyof typeof InputNameEnum];
 export type TitleType = typeof TitleIconEnum[keyof typeof TitleIconEnum];
+export type ButtonType = typeof ButtonTypeEnum[keyof typeof ButtonTypeEnum];
 export type ContentType = typeof ContentTypeEnum[keyof typeof ContentTypeEnum];
 
 export type AdminColumnsKeyType = keyof typeof AdminColumns;

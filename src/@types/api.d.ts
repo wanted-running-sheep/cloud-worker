@@ -3,9 +3,11 @@ declare module 'request' {
     [key: string]: string[];
   }
 
+  type GenderType = 'F' | 'M';
+
   interface UserInterface {
     name: string;
-    gender: 'F' | 'M';
+    gender: GenderType;
     applyDate: string;
     birth: string;
     region: {
