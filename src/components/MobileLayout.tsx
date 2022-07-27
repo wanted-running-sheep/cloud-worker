@@ -17,7 +17,6 @@ export default MobileLayout;
 
 const Wrapper = styled.main`
   background: ${({ theme }) => theme.color.background.lightyellow};
-  height: 100%;
 `;
 const Section = styled.section`
   background: ${({ theme }) => theme.color.background.white};
