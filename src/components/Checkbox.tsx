@@ -46,6 +46,7 @@ const Checkbox = ({
         <CheckMarkWrapper>
           <CheckInput
             type="checkbox"
+            name={name}
             onChange={handleChangedCheck}
             isChecked={isChecked}
             checked={checked}
