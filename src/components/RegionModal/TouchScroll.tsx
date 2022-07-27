@@ -4,22 +4,24 @@ import { DEFAULT_SELECTED_CITY } from '@/constants';
 import styled from 'styled-components';
 import Loading from '../Loading';
 
+import { useRecoilState } from 'recoil';
+import { applicantInfoState } from '@/recoil/atoms';
+
 const TouchScroll = () => {
   const { regions, getRegionData } = useRegionModel();
-  const [region, setRegion] = useState<{ city: string; district: string }>({
-    city: DEFAULT_SELECTED_CITY,
-    district: '',
-  });
+  const [applicantInfo, setApplicantInfo] = useRecoilState(applicantInfoState);
+  const { region } = applicantInfo;
 
   const onClickCity = (city: string) => {
     if (region.city === city) return;
 
-    setRegion({ city, district: '' });
+    setApplicantInfo({ ...applicantInfo, region: { city, district: '' } });
   };
 
   const onClickDistrict = (district: string) => {
     if (region.district === district) return;
-    setRegion((prevRegin) => ({ ...prevRegin, district }));
+
+    setApplicantInfo({ ...applicantInfo, region: { ...region, district } });
   };
 
   useEffect(() => {

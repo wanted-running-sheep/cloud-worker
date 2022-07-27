@@ -2,31 +2,39 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Checked } from '@/assets/icons';
 import { ChangeEventType } from '@/@types/react';
+import { useRecoilState } from 'recoil';
+import { applicantInfoState } from '@/recoil/atoms';
 
 interface RadioProps {
   name: string; //버튼 그룹. ex)성별 gender
   labels: string[]; //표면적 이름 ex)남자 or 여자
   values: string[]; //데이터값 ex) male or female
   className?: string;
+  type?: string;
+  onChange: (event: ChangeEventType<HTMLInputElement>) => void;
+  checked?: boolean;
 }
 
-const Radio = ({ name, labels, values, className }: RadioProps) => {
-  const [selected, setSelected] = useState<string>();
-
-  const radioHandler = (event: ChangeEventType<HTMLInputElement>) => {
-    setSelected(event.target.value);
-  };
-
+const SelectButton = ({
+  name,
+  labels,
+  values,
+  type = 'radio',
+  className,
+  onChange,
+  checked = false,
+}: RadioProps) => {
   return (
     <Wrapper className={className}>
       {labels.map((label, index) => (
         <RadioGroup key={index}>
           <input
-            type="radio"
+            type={type}
             name={name}
             id={values[index]}
             value={values[index]}
-            onChange={radioHandler}
+            onChange={onChange}
+            {...(type === 'checkbox' && { checked })}
           />
           <label htmlFor={values[index]}>
             <Checked />
@@ -38,7 +46,7 @@ const Radio = ({ name, labels, values, className }: RadioProps) => {
   );
 };
 
-export default Radio;
+export default SelectButton;
 
 const Wrapper = styled.div`
   ${({ theme }) => theme.mixins.flexBox('center', 'flex-start')};

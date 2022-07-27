@@ -21,3 +21,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+/server/dbtabase/db.json
+/server/dbtabase/region.json

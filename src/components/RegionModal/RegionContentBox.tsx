@@ -2,12 +2,41 @@ import React from 'react';
 import { Close } from '@/assets/icons';
 import styled from 'styled-components';
 import TouchScroll from './TouchScroll';
-
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import {
+  applicantInfoState,
+  modalTriggerState,
+  applicantValidationState,
+} from '@/recoil/atoms';
+import { UserInterfaceWithoutIdType } from 'request';
+import { DEFAULT_SELECTED_CITY } from '@/constants';
 const RegionContentBox = () => {
+  const [applicantInfo, setApplicantInfo] =
+    useRecoilState<UserInterfaceWithoutIdType>(applicantInfoState);
+  const setShowModal = useSetRecoilState<boolean>(modalTriggerState);
+  const setApplicantValidation = useSetRecoilState(applicantValidationState);
+
+  const disabled = !(
+    applicantInfo.region.city && applicantInfo.region.district
+  );
+
+  const onCloseModal = (buttonType: 'close' | 'confirm') => {
+    setShowModal(false);
+
+    if (buttonType === 'close') {
+      setApplicantInfo({
+        ...applicantInfo,
+        region: { city: DEFAULT_SELECTED_CITY, district: '' },
+      });
+    } else {
+      setApplicantValidation((prev) => ({ ...prev, region: true }));
+    }
+  };
+
   return (
     <Wrapper>
       <TitleContainer>
-        <IconContainer>
+        <IconContainer onClick={() => onCloseModal('close')}>
           <Close />
         </IconContainer>
         <TitleText>거주지역 선택</TitleText>
@@ -25,7 +54,12 @@ const RegionContentBox = () => {
       <TouchScroll />
 
       <ButtonWrapper>
-        <RoundedButton>확인</RoundedButton>
+        <RoundedButton
+          disabled={disabled}
+          onClick={() => onCloseModal('confirm')}
+        >
+          확인
+        </RoundedButton>
       </ButtonWrapper>
     </Wrapper>
   );
@@ -104,4 +138,7 @@ const RoundedButton = styled.button`
   color: ${({ theme }) => theme.color.font.white};
   font-weight: bold;
   padding: 20px 0px;
+  &:disabled {
+    opacity: 0.6;
+  }
 `;

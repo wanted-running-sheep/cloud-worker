@@ -1,5 +1,5 @@
 declare module 'request' {
-  import { TransportationType } from '@/@types/enum';
+  import { TransportationType, InputNameType } from '@/@types/enum';
 
   interface RegionDataInterface {
     [key: string]: string[];
@@ -9,7 +9,7 @@ declare module 'request' {
 
   interface UserInterface {
     id: number;
-    name: string;
+    name: InputNameType;
     gender: GenderType;
     applyDate: string;
     birth: string;
@@ -22,4 +22,6 @@ declare module 'request' {
     transportation: TransportationType[];
     isWinning: boolean;
   }
+
+  type UserInterfaceWithoutIdType = Omit<UserInterface, 'id'>;
 }

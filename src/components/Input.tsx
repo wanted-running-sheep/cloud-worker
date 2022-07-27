@@ -3,7 +3,11 @@ import React, { useState } from 'react';
 import { formatString } from '@/utils/formatString';
 import { InputNameType, InputNameEnum } from '@/@types/enum';
 
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { applicantInfoState, applicantValidationState } from '@/recoil/atoms';
+
 import styled from 'styled-components';
+import { ChangeEventType } from '@/@types/react';
 
 interface InputProps {
   name?: string;
@@ -31,25 +35,27 @@ const Input = ({
   ...otherProps
 }: InputProps) => {
   const [isValid, setIsValid] = useState<boolean>(true);
-
+  const [applicantInfo, setApplicantInfo] = useRecoilState(applicantInfoState);
+  const setApplicantValidation = useSetRecoilState(applicantValidationState);
   const checkValidation = (value: string) => {
     const regex = new RegExp(reg);
     const isValid = regex.test(value);
     return regWhiteList ? isValid : !isValid;
   };
 
-  const handleValidationCheck = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const inputValue = event.currentTarget.value;
+  const handleValidationCheck = (event: ChangeEventType<HTMLInputElement>) => {
+    const { name, value: inputValue } = event.target;
     if (!checkValidation(inputValue)) {
       if (!validationBorder) {
-        return (event.currentTarget.value = inputValue.replace(reg, ''));
+        event.currentTarget.value = inputValue.replace(reg, '');
       } else {
-        return setIsValid(false);
+        setIsValid(false);
       }
+      return false;
     }
     setIsValid(true);
+
+    return true;
   };
 
   const makeAutoFormat = (
@@ -61,13 +67,25 @@ const Input = ({
   };
 
   const handleChangeValue = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.currentTarget;
     if (reg === undefined) return;
-    handleValidationCheck(event);
-
-    const type = otherProps.name;
-    if (type === InputNameEnum.BIRTH || type === InputNameEnum.PHONE) {
-      makeAutoFormat(event, type);
+    if (!handleValidationCheck(event)) {
+      if (name === InputNameEnum.EMAIL) {
+        setApplicantValidation((prev) => ({
+          ...prev,
+          [name]: false,
+        }));
+        return;
+      }
     }
+
+    if (name === InputNameEnum.BIRTH || name === InputNameEnum.PHONE) {
+      makeAutoFormat(event, name);
+    }
+
+    setApplicantInfo({ ...applicantInfo, [name]: value });
+    const resultValidation = value ? true : false;
+    setApplicantValidation((prev) => ({ ...prev, [name]: resultValidation }));
   };
 
   return (
@@ -78,6 +96,7 @@ const Input = ({
         width={width}
         onChange={handleChangeValue}
         validationBorder={isValid}
+        /* value={value ? value : applicantInfo[name]} */
       />
     </div>
   );
@@ -88,13 +107,13 @@ const StyledInput = styled.input<{
   width: string;
   validationBorder: boolean;
 }>`
-  border: 1px solid
+  border-bottom: 1px solid
     ${({ theme, validationBorder }) =>
       validationBorder ? theme.color.border.lightgray : theme.color.border.red};
   height: ${({ height }) => `${height}`};
   width: ${({ width }) => `${width}`};
   margin-bottom: 30px;
-  border-radius: 4px;
+
   ::placeholder {
     color: ${({ theme }) => theme.color.font.gray};
   }

@@ -13,6 +13,9 @@ export const getFormattedString = {
   },
   name: (value: string) => value,
   email: (value: string) => value,
+  gender: (value: string) => value,
+  transportation: (value: string) => value,
+  region: (value: string) => value,
 };
 
 export const formatString = (value: string, type: InputNameType) => {
