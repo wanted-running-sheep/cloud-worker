@@ -6,9 +6,12 @@ export const ApiUrlEnum = {
 
 export const InputNameEnum = {
   NAME: 'name',
+  GENDER: 'gender',
   BIRTH: 'birth',
+  REGION: 'region',
   PHONE: 'phone',
   EMAIL: 'email',
+  TRANSPORTATION: 'transportation',
 } as const;
 
 export const Transportations = [

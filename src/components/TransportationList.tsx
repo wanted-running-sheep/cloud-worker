@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import RoundButton from '@/components/RoundButton';
 import useToggleButton from '@/hooks/useToggleButton';
@@ -8,14 +8,28 @@ import {
   ButtonTypeEnum,
 } from '@/@types/enum';
 
+import { useRecoilState } from 'recoil';
+import { applicantInfoState, applicantValidationState } from '@/recoil/atoms';
+
 interface TransportationListProps {
   className?: string;
+  name: string;
 }
 
-const TransportationList = ({ className }: TransportationListProps) => {
+const TransportationList = ({ className, name }: TransportationListProps) => {
   const { selectedList, onToggleButton } = useToggleButton<TransportationType>(
     ButtonTypeEnum.MULTIPLE
   );
+  const [applicantInfo, setApplicantInfo] = useRecoilState(applicantInfoState);
+  const [applicantValidation, setApplicantValidation] = useRecoilState(
+    applicantValidationState
+  );
+  useEffect(() => {
+    setApplicantInfo({ ...applicantInfo, transportation: selectedList });
+    selectedList.length > 0
+      ? setApplicantValidation({ ...applicantValidation, [name]: true })
+      : setApplicantValidation({ ...applicantValidation, [name]: false });
+  }, [selectedList]);
 
   return (
     <Wrapper className={className}>

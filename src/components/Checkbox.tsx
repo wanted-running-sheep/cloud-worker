@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import styled, { css } from 'styled-components';
@@ -8,12 +8,15 @@ interface CheckboxProps {
   link?: string;
   defaultChecked?: boolean;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  checked: boolean;
+  name: string;
 }
 
 const Checkbox = ({
   labelText,
   link = '',
   defaultChecked = false,
+  checked,
   onChange = (event: React.ChangeEvent<HTMLInputElement>) => {},
   ...otherProps
 }: CheckboxProps) => {
@@ -24,6 +27,10 @@ const Checkbox = ({
     onChange(event);
     setIsChecked((prevState) => !prevState);
   };
+
+  useEffect(() => {
+    setIsChecked(checked);
+  }, [checked]);
 
   const handleClickedLink = () => {
     navigate(link);
@@ -37,7 +44,7 @@ const Checkbox = ({
             type="checkbox"
             onChange={handleChangedCheck}
             isChecked={isChecked}
-            defaultChecked={defaultChecked}
+            checked={checked}
             {...otherProps}
           />
           <CheckMarkRound isChecked={isChecked} />
@@ -50,23 +57,6 @@ const Checkbox = ({
     </Wrapper>
   );
 };
-
-const checkShapeCss = css<{ isChecked: boolean }>`
-  &:after {
-    border: 2px solid
-      ${({ theme, isChecked }) =>
-        isChecked ? theme.color.font.black : theme.color.font.lightgray};
-    border-top: none;
-    border-right: none;
-    content: '';
-    height: 5px;
-    left: 2px;
-    position: absolute;
-    top: 4px;
-    transform: rotate(-45deg);
-    width: 13px;
-  }
-`;
 
 const Wrapper = styled.div`
   ${({ theme }) => theme.mixins.flexBox('center', 'between-space')}
@@ -101,7 +91,20 @@ const CheckMarkRound = styled.div<{ isChecked: boolean }>`
   left: 0;
   top: 0;
 
-  ${checkShapeCss}
+  &:after {
+    border: 2px solid
+      ${({ theme, isChecked }) =>
+        isChecked ? theme.color.font.black : theme.color.font.lightgray};
+    border-top: none;
+    border-right: none;
+    content: '';
+    height: 5px;
+    left: 2px;
+    position: absolute;
+    top: 4px;
+    transform: rotate(-45deg);
+    width: 13px;
+  }
 `;
 
 const Label = styled.span`

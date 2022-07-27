@@ -20,4 +20,6 @@ declare module 'request' {
     transportation: string[];
     isWinning: boolean;
   }
+
+  type UserInterfaceWithoutIdType = Omit<UserInterface, 'id'>;
 }

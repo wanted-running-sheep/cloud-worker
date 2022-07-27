@@ -1,86 +1,179 @@
-import React, { useState } from 'react';
-import {
-  Input,
-  Label,
-  TransportationList,
-  Radio,
-  Checkbox,
-  RoundButton,
-  RegionModal,
-} from '@/components';
+import React, { useState, useEffect } from 'react';
+import { Checkbox, RoundButton, RegionModal } from '@/components';
 
-import { REGEX_FOR_VALIDATION } from '@/constants/validation';
-import { ClickEventType } from '@/@types/react';
+import { ChangeEventType } from '@/@types/react';
+
+import { useRecoilState, useResetRecoilState } from 'recoil';
+import {
+  applicantInfoState,
+  applicantValidationState,
+  modalTriggerState,
+} from '@/recoil/atoms';
 
 import styled from 'styled-components';
+import useApplicant from '@/hooks/useApplicant';
+import SelectButton from '@/components/SelectButton';
+import { CHECKBOX_LABEL_TEXT } from '@/constants';
+import { UserInterfaceWithoutIdType } from 'request';
+import formatDate from '@/utils/formatDate';
+import useApplyUserModel from '@/api/models/useApplyUserModel';
+import { InputNameEnum } from '@/@types/enum';
+import moveScroll from '@/utils/moveScroll';
 
 const ApplyPage = () => {
-  const [isClickRegionField, setIsClickRegionField] = useState<boolean>(false);
+  const { postUser } = useApplyUserModel();
+
+  const [showModal, setShowModal] = useRecoilState<boolean>(modalTriggerState);
+  const [applicantInfo, setApplicantInfo] = useRecoilState(applicantInfoState);
+  const [applicantValidation, setApplicantValidation] = useRecoilState(
+    applicantValidationState
+  );
+  const { city, district } = applicantInfo.region;
+  const [isAgreements, setIsAgreements] = useState<boolean[]>([false, false]);
   const [isAllPassValidation, setIsAllPassValidation] =
     useState<boolean>(false);
 
-  const handleClickedRegion = (event: ClickEventType<HTMLInputElement>) => {
-    event.currentTarget.blur();
-    setIsClickRegionField((prevState) => !prevState);
+  const { inputAttrs } = useApplicant();
+
+  const handleClickedRegion = () => {
+    setShowModal(true);
+    moveScroll();
   };
 
-  const handleClickedApplyButton = () => {};
+  const handleClickedApplyButton = async () => {
+    const data: UserInterfaceWithoutIdType = {
+      ...applicantInfo,
+      applyDate: formatDate(new Date()),
+      birth: applicantInfo.birth.replaceAll('.', '-'),
+    };
+
+    await postUser(data);
+    location.reload();
+  };
+
+  const handleChangeAgreement = (event: ChangeEventType<HTMLInputElement>) => {
+    const { checked } = event.target;
+    setIsAgreements((prev) => {
+      return prev.map(() => checked);
+    });
+  };
+
+  const handleChangeGender = (event: ChangeEventType<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setApplicantInfo({ ...applicantInfo, [name]: value });
+    !applicantValidation[name] &&
+      setApplicantValidation({ ...applicantValidation, [name]: true });
+  };
+
+  const handleChangeEachAgreement = (
+    event: ChangeEventType<HTMLInputElement>
+  ) => {
+    const { name, checked } = event.target;
+    setIsAgreements((prev) => {
+      const temp = [...prev];
+      temp[Number(name)] = checked;
+      return [...temp];
+    });
+  };
+
+  useEffect(() => {
+    console.log(Object.keys(applicantValidation).length);
+    if (
+      Object.keys(InputNameEnum).length !==
+      Object.keys(applicantValidation).length
+    )
+      return;
+
+    const isValidation = Object.values(applicantValidation).every(
+      (validation) => validation === true
+    );
+
+    const isAgreement = isAgreements.every((agreement) => agreement === true);
+
+    setIsAllPassValidation(isValidation && isAgreement);
+  }, [applicantValidation, isAgreements]);
 
   return (
     <div>
-      <Label title="이름" />
-      <InputField
-        name="name"
-        placeholder="홍길동 (한글만 입력 가능)"
-        reg={REGEX_FOR_VALIDATION.NAME}
-      />
-      <Label title="성별" />
-      <GenderRadio
-        name="gender"
-        labels={['남자', '여자']}
-        values={['M', 'F']}
-      />
-      <Label title="생년월일" />
-      <InputField
-        name="birth"
-        placeholder="YYYY.MM.DD (숫자만 입력 가능)"
-        maxLength={10}
-        reg={REGEX_FOR_VALIDATION.BIRTH}
-      />
-      <Label title="거주지역" />
-      <InputField
-        name="region"
-        placeholder="거주지역 선택"
-        onClick={handleClickedRegion}
-      />
-      <Label title="연락처" />
-      <InputField
-        name="phone"
-        placeholder="'-'없이 입력해 주세요 (숫자만 입력 가능)"
-        maxLength={13}
-        reg={REGEX_FOR_VALIDATION.PHONE}
-      />
-      <Label title="이메일" />
-      <InputField
-        name="email"
-        placeholder="MYD@snplab.com"
-        reg={REGEX_FOR_VALIDATION.EMAIL}
-        regWhiteList={true}
-        validationBorder={true}
-      />
-      <Label
-        title="주로 이용하는 교통수단"
-        description="주로 이용하는 교통수단을 모두 선택해 주세요"
-      />
-      <StyledTransportationList />
+      {inputAttrs.map(
+        ({
+          name,
+          title,
+          description,
+          placeholder,
+          reg,
+          maxLength,
+          regWhiteList,
+          validationBorder,
+          Component,
+          GenderComponent,
+          TransportationComponent,
+        }) => {
+          if (name === 'gender' && GenderComponent) {
+            return (
+              <GenderComponent
+                key={name}
+                title={title}
+                onChange={handleChangeGender}
+              />
+            );
+          }
+
+          if (name === 'transportation' && TransportationComponent) {
+            return (
+              <TransportationComponent
+                key={name}
+                title={title}
+                description={description}
+                name={name}
+              />
+            );
+          }
+          return (
+            Component && (
+              <Component
+                key={name}
+                title={title}
+                name={name}
+                placeholder={placeholder}
+                reg={reg}
+                maxLength={maxLength}
+                {...(name === 'email' && { regWhiteList, validationBorder })}
+                {...(name === 'region' && {
+                  readOnly: true,
+                  onClick: handleClickedRegion,
+                  value: district && !showModal ? `${city} ${district}` : '',
+                })}
+              />
+            )
+          );
+        }
+      )}
+
       <AllAgreeRadio
         name="agreement"
         labels={['이용약관 모두 동의']}
         values={['yes']}
+        type="checkbox"
+        onChange={handleChangeAgreement}
+        checked={
+          isAgreements.filter((prev) => prev === true).length ===
+          CHECKBOX_LABEL_TEXT.length
+        }
       />
       <Hr />
-      <Checkbox labelText="개인정보 처리방침 고지 (필수)" />
-      <Checkbox labelText="제3자 정보제공 동의 (필수)" />
+      {CHECKBOX_LABEL_TEXT.map((label, index) => {
+        return (
+          <Checkbox
+            key={label}
+            labelText={label}
+            name={index.toString()}
+            checked={isAgreements[index]}
+            onChange={handleChangeEachAgreement}
+          />
+        );
+      })}
+
       <ApplyButton
         showText="지원하기"
         width="100%"
@@ -89,35 +182,18 @@ const ApplyPage = () => {
         disabled={!isAllPassValidation}
         onClick={handleClickedApplyButton}
       />
-      {isClickRegionField && <RegionModal />}
+      {showModal && <RegionModal />}
     </div>
   );
 };
 
 export default ApplyPage;
 
-const InputField = styled(Input)`
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  margin-top: 10px;
-`;
-
-const GenderRadio = styled(Radio)`
-  padding-left: 0px;
-  margin-bottom: 20px;
-`;
-
-const StyledTransportationList = styled(TransportationList)`
-  margin-top: 10px;
-  margin-bottom: 30px;
-`;
-
 const Hr = styled.hr`
   border: 1px solid black;
 `;
 
-const AllAgreeRadio = styled(Radio)`
+const AllAgreeRadio = styled(SelectButton)`
   padding-left: 0px;
 `;
 
