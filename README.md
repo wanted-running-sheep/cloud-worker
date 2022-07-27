@@ -126,13 +126,12 @@
 
 ## 4. 역할
 
-| 이름                                       | 담당 역할                                                                                                                              |
-| ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------- |
-| [ 양아름 ](https://github.com/areumsheep)  | Apply 레이아웃, 로그인 페이지, 랜딩 페이지, Label, TransportationList, RoundButton, SearchBar 개발, Admin 페이지 구현, 이용약관 라우터 |
-| [ 조현호 ](https://github.com/hajun2)      | Title, Content, Radio, Table 개발, Admin 페이지 구현, 이용약관 라우터                                                                  |
-| [ 최창열 ](https://github.com/pinkdumbbel) | json-server구축 및 api모듈 구현 및 호출, 유저 데이터 생성, 페칭, Modal, TouchScroll, Pagination 개발, Apply 페이지 구현                |
-| [ 최중재 ](https://github.com/joong8812)   | Admin 레이아웃, CSV 다운로드, Input, CheckBox 개발, Apply 페이지 구현                                                                  |
-
+| 성함                                     | 담당 역할                                                                                                                                                |
+|------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [양아름](https://github.com/areumsheep)  | 지원하기 페이지 레이아웃, 로그인 페이지, 랜딩 페이지, Label, TransportationList, RoundButton, SearchBar 개발, Admin 페이지 구현, 이용약관                |
+| [조현호](https://github.com/hajun2)      | Title, Content, Radio, Table 개발, Admin 페이지 구현, 이용약관 라우터                                                                                    |
+| [최창열](https://github.com/pinkdumbbel) | json-server구축 및 api모듈 구현 및 호출, 유저 데이터 생성, Data fetching module 개발, Modal, TouchScroll, Pagination 컴포넌트 개발, 지원하기 페이지 구현 |
+| [최중재](https://github.com/joong8812)   | 어드민 페이지 레이아웃, CSV 다운로드, Input, CheckBox 컴포넌트 개발, 지원하기 페이지 컴포넌트 병합                                                       |
 <br />
 
 ## 5. 프로젝트 제작 과정
@@ -155,7 +154,10 @@
 - 화면에 필요한 기능을 기준으로 할 일을 나누고 각자 직접 원하는 기능을 선정하고 기한을 정함.
 - 각자 코딩하는 과정에도 서로 작업중인 내용을 일정 관리 표, issue, PR을 통해 공유하며 진행함.
 
-### [3] 지난 과제의 회고를 통해 돈독한 분위기를 다지고 팀웍을 더 살리게 되었습니다 🔥
+### [3] 지난 과제의 회고를 통해 돈독한 분위기를 다지고 부족한 부분을 충원하였습니다! 🔥
+[저희의 회고가 궁금하시다면?🤔 여기를 클릭해보세요!](https://www.figma.com/file/LnRLpKYz2kyqVdnCQv7ATt/%EC%9B%90%ED%8B%B0%EB%93%9C-%ED%94%84%EB%A6%AC%EC%98%A8%EB%B3%B4%EB%94%A9-%ED%9A%8C%EA%B3%A0?node-id=0%3A1)
+![image](https://user-images.githubusercontent.com/48716298/181185326-45338f5c-cd0c-4196-988c-a10f35018348.png)
+
 
 <br/>
 
