@@ -13,20 +13,28 @@ const Login = () => {
     password: '1234',
   };
 
+  const checkAdminInfoByInputData = (
+    type: 'id' | 'password',
+    compareValue: string
+  ) => {
+    return compareValue !== adminInfo[type];
+  };
+
   const onSubmit = (event: FormEventType) => {
     event.preventDefault();
-    console.log('hello');
-
     const inputedId = idRef.current?.value;
     const inputedPassword = pwRef.current?.value;
 
-    if (inputedId !== adminInfo.id) alert(MESSAGES.LOGIN.ID_NOT_VALID);
-    else if (inputedPassword !== adminInfo.password)
-      alert(MESSAGES.LOGIN.PW_NOT_VALID);
-    else {
-      console.log('hihi');
-      navigate('/admin');
+    if (checkAdminInfoByInputData('id', inputedId!)) {
+      alert(MESSAGES.LOGIN.ID_NOT_VALID);
+      return;
     }
+    if (checkAdminInfoByInputData('password', inputedPassword!)) {
+      alert(MESSAGES.LOGIN.PW_NOT_VALID);
+      return;
+    }
+
+    navigate('/admin');
   };
   return (
     <Wrapper onSubmit={onSubmit}>

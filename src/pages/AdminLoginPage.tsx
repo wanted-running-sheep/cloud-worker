@@ -18,7 +18,6 @@ export default AdminLoginPage;
 const Wrapper = styled.div`
   ${({ theme }) => theme.mixins.flexBox()};
   height: 100%;
-  background: #ffffff;
 `;
 const Content = styled.div`
   width: 400px;
