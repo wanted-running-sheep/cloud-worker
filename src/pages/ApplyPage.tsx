@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import {
   Input,
   Label,
@@ -8,13 +10,12 @@ import {
   RoundButton,
   RegionModal,
 } from '@/components';
-
+import { ContentType } from '@/@types/enum';
 import { REGEX_FOR_VALIDATION } from '@/constants/validation';
 import { ClickEventType } from '@/@types/react';
 
-import styled from 'styled-components';
-
 const ApplyPage = () => {
+  const navigate = useNavigate();
   const [isClickRegionField, setIsClickRegionField] = useState<boolean>(false);
   const [isAllPassValidation, setIsAllPassValidation] =
     useState<boolean>(false);
@@ -24,10 +25,13 @@ const ApplyPage = () => {
     setIsClickRegionField((prevState) => !prevState);
   };
 
-  const handleClickedApplyButton = () => {};
+  const handleClickedApplyButton = (type: ContentType) => {
+    navigate(`/agreement/${type}`);
+  };
 
   return (
-    <div>
+    <Wrapper>
+      <h1>크라우드 워커에 지원하기 위해 필요한 정보를 입력해 주세요</h1>
       <Label title="이름" />
       <InputField
         name="name"
@@ -79,22 +83,36 @@ const ApplyPage = () => {
         values={['yes']}
       />
       <Hr />
-      <Checkbox labelText="개인정보 처리방침 고지 (필수)" />
-      <Checkbox labelText="제3자 정보제공 동의 (필수)" />
+      <Checkbox
+        labelText="개인정보 처리방침 고지 (필수)"
+        onClick={() => handleClickedApplyButton('privacy')}
+      />
+      <Checkbox
+        labelText="제3자 정보제공 동의 (필수)"
+        onClick={() => handleClickedApplyButton('thirdParty')}
+      />
       <ApplyButton
         showText="지원하기"
         width="100%"
         borderRadius="8px"
         padding="15px 13px"
         disabled={!isAllPassValidation}
-        onClick={handleClickedApplyButton}
       />
       {isClickRegionField && <RegionModal />}
-    </div>
+    </Wrapper>
   );
 };
 
 export default ApplyPage;
+
+const Wrapper = styled.div`
+  h1 {
+    width: 260px;
+    font-size: 1.3rem;
+    font-weight: 900;
+    margin-bottom: 35px;
+  }
+`;
 
 const InputField = styled(Input)`
   border-top: none;

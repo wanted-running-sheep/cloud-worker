@@ -7,5 +7,7 @@ export { default as TransportationList } from './TransportationList';
 export { default as RegionModal } from './RegionModal';
 export { default as Loading } from './Loading';
 export { default as SearchBar } from './SearchBar';
+export { default as Content } from './Content';
+export { default as Title } from './Title';
 
 export { default as UserList } from '@/components/UserList/UserList';
