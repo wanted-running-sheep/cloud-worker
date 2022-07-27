@@ -11,4 +11,7 @@ export { default as Login } from './Login';
 export { default as Content } from './Content';
 export { default as Title } from './Title';
 
-export { default as UserList } from '@/components/UserList/UserList';
+export { default as Tab } from '@/components/UserList/Tab';
+export { default as Table } from '@/components/UserList/Table';
+export { default as Tooltip } from '@/components/UserList/Tooltip';
+export { default as Pagination } from '@/components/UserList/Pagination';

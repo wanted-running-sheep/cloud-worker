@@ -1,4 +1,6 @@
 declare module 'request' {
+  import { TransportationType } from '@/@types/enum';
+
   interface RegionDataInterface {
     [key: string]: string[];
   }
@@ -17,7 +19,7 @@ declare module 'request' {
     };
     phone: string;
     email: string;
-    transportation: string[];
+    transportation: TransportationType[];
     isWinning: boolean;
   }
 }

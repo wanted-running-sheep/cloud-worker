@@ -4,6 +4,7 @@ import media from './media';
 const color = {
   background: {
     white: '#FFFFFF',
+    lightwhite: '#FAFAFA',
     lightgray: '#F7F7F7',
     lightyellow: '#f8f3e7',
     blue: '#4458FF',
@@ -17,6 +18,7 @@ const color = {
     lightgray: '#E4E4E4',
     gray: '#A9A9A9',
     darkgray: '#727272',
+    lightblack: '#5A5A5A',
     black: '#000000',
   },
   border: {
