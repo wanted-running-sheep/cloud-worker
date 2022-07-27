@@ -15,7 +15,7 @@ import styled from 'styled-components';
 import useApplicant from '@/hooks/useApplicant';
 import SelectButton from '@/components/SelectButton';
 import { CHECKBOX_LABEL_TEXT } from '@/constants';
-import { UserInterfaceWithoutIdType } from 'request';
+import { UserInterface } from 'request';
 import formatDate from '@/utils/formatDate';
 import useApplyUserModel from '@/api/models/useApplyUserModel';
 import { ContentType, ContentTypeEnum, InputNameEnum } from '@/@types/enum';
@@ -45,7 +45,7 @@ const ApplyPage = () => {
   };
 
   const handleClickedApplyButton = async () => {
-    const data: UserInterfaceWithoutIdType = {
+    const data: UserInterface = {
       ...applicantInfo,
       applyDate: formatDate(new Date()),
       birth: applicantInfo.birth.replaceAll('.', '-'),

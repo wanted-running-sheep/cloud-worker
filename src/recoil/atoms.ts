@@ -1,9 +1,10 @@
 import { DEFAULT_SELECTED_CITY } from '@/constants';
 import { atom } from 'recoil';
-import { UserInterfaceWithoutIdType } from 'request';
-export const applicantInfoState = atom<UserInterfaceWithoutIdType>({
+import { UserInterface } from 'request';
+export const applicantInfoState = atom<UserInterface>({
   key: 'applicantInfoState',
   default: {
+    id: 0,
     name: 'name',
     gender: 'F',
     applyDate: '',
