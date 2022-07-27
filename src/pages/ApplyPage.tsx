@@ -15,7 +15,7 @@ import styled from 'styled-components';
 import useApplicant from '@/hooks/useApplicant';
 import SelectButton from '@/components/SelectButton';
 import { CHECKBOX_LABEL_TEXT } from '@/constants';
-import { UserInterfaceWithoutIdType } from 'request';
+import { UserInterface } from 'request';
 import formatDate from '@/utils/formatDate';
 import useApplyUserModel from '@/api/models/useApplyUserModel';
 import { ContentType, ContentTypeEnum, InputNameEnum } from '@/@types/enum';
@@ -45,7 +45,7 @@ const ApplyPage = () => {
   };
 
   const handleClickedApplyButton = async () => {
-    const data: UserInterfaceWithoutIdType = {
+    const data: UserInterface = {
       ...applicantInfo,
       applyDate: formatDate(new Date()),
       birth: applicantInfo.birth.replaceAll('.', '-'),
@@ -107,6 +107,7 @@ const ApplyPage = () => {
 
   return (
     <div>
+      <Title>크라우드 워커에 지원하기 위해 필요한 정보를 입력해 주세요</Title>
       {inputAttrs.map(
         ({
           name,
@@ -207,6 +208,11 @@ export default ApplyPage;
 
 const Hr = styled.hr`
   border: 1px solid black;
+`;
+const Title = styled.h1`
+  width: 270px;
+  font-size: 1.2rem;
+  margin-bottom: 35px;
 `;
 
 const AllAgreeRadio = styled(SelectButton)`

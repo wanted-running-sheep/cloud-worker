@@ -8,11 +8,11 @@ import {
   modalTriggerState,
   applicantValidationState,
 } from '@/recoil/atoms';
-import { UserInterfaceWithoutIdType } from 'request';
+import { UserInterface } from 'request';
 import { DEFAULT_SELECTED_CITY } from '@/constants';
 const RegionContentBox = () => {
   const [applicantInfo, setApplicantInfo] =
-    useRecoilState<UserInterfaceWithoutIdType>(applicantInfoState);
+    useRecoilState<UserInterface>(applicantInfoState);
   const setShowModal = useSetRecoilState<boolean>(modalTriggerState);
   const setApplicantValidation = useSetRecoilState(applicantValidationState);
 

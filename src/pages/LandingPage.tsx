@@ -29,7 +29,7 @@ const Wrapper = styled.div`
   height: 100%;
 `;
 const Content = styled.div`
-  width: 400px;
+  width: 430px;
 
   padding-bottom: 30px;
   text-align: center;

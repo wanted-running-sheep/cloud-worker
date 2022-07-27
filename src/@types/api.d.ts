@@ -22,6 +22,4 @@ declare module 'request' {
     transportation: TransportationType[];
     isWinning: boolean;
   }
-
-  type UserInterfaceWithoutIdType = Omit<UserInterface, 'id'>;
 }

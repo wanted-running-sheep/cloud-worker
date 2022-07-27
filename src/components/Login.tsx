@@ -61,7 +61,7 @@ const Wrapper = styled.form`
   button {
     width: 100%;
     height: 50px;
-    margin-top: 30px;
+    margin-top: 20px;
     border-radius: 10px;
     color: ${({ theme }) => theme.color.font.white};
     background: ${({ theme }) => theme.color.background.blue};
