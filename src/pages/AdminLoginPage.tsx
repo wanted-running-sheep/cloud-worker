@@ -29,6 +29,5 @@ const Content = styled.div`
   h1 {
     font-size: 3rem;
     font-weight: 900;
-    letter-spacing: -2px;
   }
 `;
