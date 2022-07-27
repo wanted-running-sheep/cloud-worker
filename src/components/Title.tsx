@@ -6,12 +6,15 @@ import { TitleIconEnum, TitleType } from '@/@types/enum';
 interface TitleProps {
   title: string;
   icon: TitleType;
+  onClick?: () => void;
 }
 
-const Title = ({ title, icon }: TitleProps) => {
+const Title = ({ title, icon, onClick }: TitleProps) => {
   return (
     <Wrapper iconType={icon}>
-      <div>{icon === TitleIconEnum.CLOSE ? <Close /> : <LeftDirection />}</div>
+      <div onClick={onClick}>
+        {icon === TitleIconEnum.CLOSE ? <Close /> : <LeftDirection />}
+      </div>
       <h2>{title}</h2>
     </Wrapper>
   );
@@ -21,8 +24,8 @@ export default Title;
 
 const Wrapper = styled.div<{ iconType: string }>`
   width: 100%;
-  padding: 15px 5px;
-  margin-bottom: 10px;
+  padding: 5px 5px 15px 5px;
+  margin-bottom: 20px;
   border-bottom: 1px solid ${({ theme }) => theme.color.border.lightgray};
   ${({ theme }) => theme.mixins.flexBox('center', 'center')};
   div {

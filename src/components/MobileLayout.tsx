@@ -7,7 +7,6 @@ const MobileLayout = () => {
   return (
     <Wrapper>
       <Section>
-        <h1>크라우드 워커에 지원하기 위해 필요한 정보를 입력해 주세요</h1>
         <Outlet />
       </Section>
     </Wrapper>
@@ -26,10 +25,4 @@ const Section = styled.section`
   max-width: 550px;
   padding: 15px 15px;
   position: relative;
-  h1 {
-    width: 300px;
-    font-size: 1.3rem;
-    font-weight: 900;
-    margin-bottom: 35px;
-  }
 `;

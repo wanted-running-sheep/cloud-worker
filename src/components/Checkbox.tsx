@@ -1,52 +1,43 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-
 import styled, { css } from 'styled-components';
+
+import { RightDirection } from '@/assets/icons';
 
 interface CheckboxProps {
   labelText?: string;
   link?: string;
   defaultChecked?: boolean;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onClick?: () => void;
 }
 
 const Checkbox = ({
   labelText,
   link = '',
   defaultChecked = false,
-  onChange = (event: React.ChangeEvent<HTMLInputElement>) => {},
   ...otherProps
 }: CheckboxProps) => {
   const [isChecked, setIsChecked] = useState<boolean>(defaultChecked);
-  const navigate = useNavigate();
-
-  const handleChangedCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(event);
+  const handleChangedCheck = () => {
     setIsChecked((prevState) => !prevState);
-  };
-
-  const handleClickedLink = () => {
-    navigate(link);
   };
 
   return (
     <Wrapper>
-      <LeftSide>
+      <div>
         <CheckMarkWrapper>
           <CheckInput
             type="checkbox"
             onChange={handleChangedCheck}
             isChecked={isChecked}
             defaultChecked={defaultChecked}
-            {...otherProps}
           />
           <CheckMarkRound isChecked={isChecked} />
         </CheckMarkWrapper>
-        <Label onClick={handleClickedLink}>{labelText}</Label>
-      </LeftSide>
-      <RightSide>
-        <RightArrow onClick={handleClickedLink} />
-      </RightSide>
+        <Label onClick={handleChangedCheck}>{labelText}</Label>
+      </div>
+      <div onClick={otherProps.onClick}>
+        <RightDirection />
+      </div>
     </Wrapper>
   );
 };
@@ -69,18 +60,15 @@ const checkShapeCss = css<{ isChecked: boolean }>`
 `;
 
 const Wrapper = styled.div`
-  ${({ theme }) => theme.mixins.flexBox('center', 'between-space')}
+  ${({ theme }) => theme.mixins.flexBox('center', 'space-between')}
   width: 100%;
   padding: 10px 0;
   padding-right: 10px;
-`;
 
-const LeftSide = styled.div`
-  width: 90%;
-`;
-const RightSide = styled.div`
-  ${({ theme }) => theme.mixins.flexBox('center', 'right')}
-  width: 10%;
+  svg {
+    height: 18px;
+    width: 40px;
+  }
 `;
 
 const CheckInput = styled.input<{ isChecked: boolean }>`
@@ -109,20 +97,4 @@ const Label = styled.span`
   cursor: pointer;
 `;
 
-const RightArrow = styled.div`
-  width: 5px;
-  height: 5px;
-  position: relative;
-  cursor: pointer;
-  &:after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border: 1px solid ${({ theme }) => theme.color.font.black};
-    border-right: 0;
-    border-top: 0;
-    transform: rotate(225deg);
-  }
-`;
 export default Checkbox;
