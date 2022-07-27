@@ -107,6 +107,7 @@ const ApplyPage = () => {
 
   return (
     <div>
+      <Title>크라우드 워커에 지원하기 위해 필요한 정보를 입력해 주세요</Title>
       {inputAttrs.map(
         ({
           name,
@@ -207,6 +208,11 @@ export default ApplyPage;
 
 const Hr = styled.hr`
   border: 1px solid black;
+`;
+const Title = styled.h1`
+  width: 270px;
+  font-size: 1.2rem;
+  margin-bottom: 35px;
 `;
 
 const AllAgreeRadio = styled(SelectButton)`
