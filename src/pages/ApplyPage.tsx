@@ -176,7 +176,6 @@ const ApplyPage = () => {
       />
       <Hr />
       {CHECKBOX_LABEL_TEXT.map((label, index) => {
-        console.log(isAgreements);
         return (
           <Checkbox
             key={label}
