@@ -16,7 +16,7 @@ const Router = () => {
       </Route>
       <Route path="/login" element={<AdminLoginPage />}></Route>
       <Route path="/landing" element={<LandingPage />}></Route>
-      <Route path="*" element={<Navigate replace to="/apply" />} />
+      <Route path="*" element={<Navigate replace to="/landing" />} />
     </Routes>
   );
 };
