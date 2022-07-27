@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Checkbox, RoundButton, RegionModal } from '@/components';
 import { useNavigate } from 'react-router-dom';
-import { ApiUrlEnum } from '@/@types/enum';
 
 import { ChangeEventType } from '@/@types/react';
 
-import { useRecoilState, useResetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import {
   applicantInfoState,
   applicantValidationState,
@@ -39,7 +38,6 @@ const ApplyPage = () => {
     useState<boolean>(false);
 
   const { inputAttrs } = useApplicant();
-  const navigate = useNavigate();
 
   const handleClickedRegion = () => {
     setShowModal(true);
@@ -54,7 +52,7 @@ const ApplyPage = () => {
     };
 
     await postUser(data);
-    navigate('/landing');
+    window.location.replace('/landing');
   };
 
   const handleChangeAgreement = (event: ChangeEventType<HTMLInputElement>) => {
@@ -83,7 +81,6 @@ const ApplyPage = () => {
   };
 
   const openAgreementModal = (index: number) => {
-    console.log('--------');
     const type: ContentType[] = ['privacy', 'thirdParty'];
     setContentType(type[index]);
     setIsAgreement(true);
