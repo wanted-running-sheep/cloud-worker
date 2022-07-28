@@ -9,7 +9,7 @@ const useSearchUser = () => {
     keyword: '',
   });
   const { users, getUserData } = useApplyUserModel();
-  const [tab, setTab] = useState<number>(1);
+  const [tab, setTab] = useState<number>(2);
   const [filteredUsers, setFilteredUsers] = useState<UserInterface[]>([]);
 
   useEffect(() => {
