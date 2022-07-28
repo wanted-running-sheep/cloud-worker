@@ -173,5 +173,5 @@ $ git clone
 
 ```command
 $ npm install
-$ npm run start
+$ npm run dev
 ```
